@@ -23,16 +23,16 @@ This survey provides a comprehensive review of runtime scheduling and resource o
   - [3.4 Profile-Guided and Learning-Driven Scheduling](34-Profile-Guided-and-Learning-Driven-Scheduling)
 - [4. Design Tradeoffs and System Insights](#4-Design-Tradeoffs-and-System-Insights)
   - [4.1 Granularity Tradeoffs: Control Precision vs. Management Overhead](#41-Granularity-Tradeoffs-Control-Precision-vs-Management-Overhead)
-  - [4.2 Compute--Memory Tradeoffs: Compute Throughput vs. Memory Efficiency](#4.2 Compute--Memory Tradeoffs: Compute Throughput vs. Memory Efficiency)
-  - [4.3 Predictability--Adaptivity Tradeoffs: Guarantees vs. Flexibility](#4.3 Predictability--Adaptivity Tradeoffs: Guarantees vs. Flexibility)
-  - [4.4 Isolation--Sharing Tradeoffs: Safety Guarantees vs. System Efficiency](#4.4 Isolation--Sharing Tradeoffs: Safety Guarantees vs. System Efficiency)
-  - [4.5 Latency--Energy--Accuracy Tradeoffs: Multi-Objective Tension](#4.5 Latency--Energy--Accuracy Tradeoffs: Multi-Objective Tension)
+  - [4.2 Compute-Memory Tradeoffs: Compute Throughput vs. Memory Efficiency](#42-Compute-Memory-Tradeoffs-Compute-Throughput-vs-Memory-Efficiency)
+  - [4.3 Predictability-Adaptivity Tradeoffs: Guarantees vs. Flexibility](#43-Predictability-Adaptivity-Tradeoffs-Guarantees-vs-Flexibility)
+  - [4.4 Isolation-Sharing Tradeoffs: Safety Guarantees vs. System Efficiency](#44-Isolation-Sharing-Tradeoffs-Safety-Guarantees-vs-System-Efficiency)
+  - [4.5 Latency-Energy-Accuracy Tradeoffs: Multi-Objective Tension](#45-Latency-Energy-Accuracy-Tradeoffs-Multi-Objective Tension)
 
-- [5. Open Challenges and Future Directions](#5. Open Challenges and Future Directions)
-  - [5.1 LLM-Aware Runtime Systems](#5.1 LLM-Aware Runtime Systems)
-  - [5.2 Memory-Centric Resource Management](#5.2 Memory-Centric Resource Management)
-  - [5.3 AI-Native Runtime Systems](#5.3 AI-Native Runtime Systems)
-  - [5.4 Verified and Explainable Scheduling](#5.4 Verified and Explainable Scheduling)
+- [5. Open Challenges and Future Directions](#5-Open-Challenges-and-Future-Directions)
+  - [5.1 LLM-Aware Runtime Systems](#51-LLM-Aware-Runtime-Systems)
+  - [5.2 Memory-Centric Resource Management](#52-Memory-Centric-Resource-Management)
+  - [5.3 AI-Native Runtime Systems](#53-AI-Native-Runtime-Systems)
+  - [5.4 Verified and Explainable Scheduling](#54-Verified-and-Explainable-Scheduling)
 
 ## Citation
 
@@ -138,13 +138,13 @@ Heuristic/ Optimization/ Control/ Learning
 
 ### 4.1 Granularity Tradeoffs: Control Precision vs. Management Overhead
 
-### 4.2 Compute--Memory Tradeoffs: Compute Throughput vs. Memory Efficiency
+### 4.2 Compute-Memory Tradeoffs: Compute Throughput vs. Memory Efficiency
 
-### 4.3 Predictability--Adaptivity Tradeoffs: Guarantees vs. Flexibility
+### 4.3 Predictability-Adaptivity Tradeoffs: Guarantees vs. Flexibility
 
-### 4.4 Isolation--Sharing Tradeoffs: Safety Guarantees vs. System Efficiency
+### 4.4 Isolation-Sharing Tradeoffs: Safety Guarantees vs. System Efficiency
 
-### 4.5 Latency--Energy--Accuracy Tradeoffs: Multi-Objective Tension
+### 4.5 Latency-Energy-Accuracy Tradeoffs: Multi-Objective Tension
 
 
 
