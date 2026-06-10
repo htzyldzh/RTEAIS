@@ -111,15 +111,28 @@ Heuristic/ Optimization/ Control/ Learning
 | [DynaMIX: Resource Optimization for DNN-Based Real-Time Applications on a Multi-Tasking System](https://arxiv.org/abs/2302.01568) |  2023<br />arXiv  |  ○   |  ♡   |   ♣♦\|♣▲   |  ⒸⓂ  |  ✫   | **Optimization** |                       -                        |
 | [DREAM: A Dynamic Scheduler for Dynamic Real-time Multi-model ML Workloads ](https://dl.acm.org/doi/abs/10.1145/3623278.3624753) | 2023<br />ASPLOS  |  ●   |  ♧   |   ♣♥\|♣♥   | ⒸⒶⒻ  |  ✦   |  **Heuristic**   |                       -                        |
 | [ODMDEF: On-Device Multi-DNN Execution Framework Utilizing Adaptive Layer-Allocation on General Purpose Cores and Accelerators](https://ieeexplore.ieee.org/abstract/document/9453793) | 2021<br />Access  |  ○   | ♡♢♧  |     ♣      | ⒸⒶⓂ  |  ✫   |   **Learning**   |                       -                        |
-| [AxoNN nergy-aware execution of neural network inference on multi-accelerator heterogeneous SoCs ](https://dl.acm.org/doi/abs/10.1145/3489517.3530572) |   2022<br />DAC   |  ○   | ♡♢♧  |    ♣\|♥    |  ⒶⒻ  |  ✫   | **Optimization** |                       -                        |
+| [AxoNN nergy-aware execution of neural network inference on multi-accelerator heterogeneous SoCs ](https://dl.acm.org/doi/abs/10.1145/3489517.3530572) |   2022<br />DAC   |  ○   | ♡♢♧  |    ♣\|♥    | ⒸⒶⒻ  |  ✫   | **Optimization** |                       -                        |
 | [Shared Memory-contention-aware Concurrent DNN Execution for Diversely Heterogeneous System-on-Chips ](https://dl.acm.org/doi/abs/10.1145/3627535.3638502) |  2024<br />PPoPP  |  ○   | ♡♢♧  |    ♣♠▲     |  ⒸⒶ  |  ✫   | **Optimization** | [code](https://github.com/ismetdagli/HaX-CoNN) |
-| [GCAPS: GPU Context-Aware Preemptive Priority-based Scheduling for Real-Time Tasks](https://arxiv.org/abs/2406.05221) |  2024<br />arXiv  |      |      |            |      |      |                  |                                                |
-|                                                              |                   |      |      |            |      |      |                  |                                                |
-|                                                              |                   |      |      |            |      |      |                  |                                                |
+| [GCAPS: GPU Context-Aware Preemptive Priority-based Scheduling for Real-Time Tasks](https://arxiv.org/abs/2406.05221) |  2024<br />arXiv  |  ○   |  ♡♢  |   ♣\|♣✤    |  ⒸⒶ  |  ✪   | **Optimization** |                       -                        |
+| [DNN-SAM: Split-and-Merge DNN Execution for Real-Time Object Detection ](https://ieeexplore.ieee.org/abstract/document/9804671) |  2022<br />RTAS   |  ○   |  ♢   |   ♣♦\|♣♦   |  Ⓒ   |  ✦   | **Optimization** |                       -                        |
+| [CF-DETR: Coarse-to-Fine Transformer for Real-Time Object Detection ](https://ieeexplore.ieee.org/abstract/document/11315056) |  2025<br />RTSS   |  ●   |  ♢♧  |   ♣♦\|♣♦   |  ⒸⒶ  |  ✦   | **Optimization** |                       -                        |
 
 
 
 ### 2.2 Memory Resource Orchestration
+
+|                            Title                             |  year<br />Venue  |  W   |  H   | Obj \| Con | Orc  | Gran |    Policy     |                         Code                         |
+| :----------------------------------------------------------: | :---------------: | :--: | :--: | :--------: | :--: | :--: | :-----------: | :--------------------------------------------------: |
+| [MCUNet: Tiny Deep Learning on IoT Devices](https://proceedings.neurips.cc/paper/2020/hash/86c51678350f656dcc7f490a43946ee5-Abstract.html) |  2020 <br />NlPS  |  ○   |  ♡   |   ♣♦\|▲    |  ⒸⓂ  |  ✦   | **Learning**  |    [Code](https://github.com/mit-han-lab/mcunet)     |
+| [Memory-efficient Patch-based Inference for Tiny Deep Learning](https://proceedings.neurips.cc/paper_files/paper/2021/hash/1371bccec2447b5aa6d96d2a540fb401-Abstract.html) |  2021 <br />NlPS  |  ○   |  ♡   |   ♣♦\|▲    |  ⒸⓂ  |  ✫   | **Learning**  |                          -                           |
+| [StreamNet: Memory-Efficient Streaming Tiny Deep Learning Inference on the Microcontroller](https://proceedings.neurips.cc/paper_files/paper/2023/hash/7526508f11bbe0a123af62b9dab1fbe1-Abstract-Conference.html) |  2023<br />NIPS   |  ○   |  ♡   |   ♣▲\|▲    |  ⒸⓂ  |  ✫   | **Heuristic** |                          -                           |
+| [FlexNN: Efficient and Adaptive DNN Inference on Memory-Constrained Edge Devices ](https://dl.acm.org/doi/abs/10.1145/3636534.3649391) | 2024<br />MobiCom |  ○   |  ♡   |   ♣▲\|▲    |  ⒸⓂ  |  ✫   | **Heuristic** |       [Code](https://github.com/xxxxyu/FlexNN)       |
+| [vMCU: Coordinated Memory Management and Kernel Optimization for DNN Inference on MCUs](https://proceedings.mlsys.org/paper_files/paper/2024/hash/d5a655b8b373737b4f2aea8f78e5e754-Abstract-Conference.html) |  2024<br />MLSys  |  ○   |  ♡   |   ▲♥\|▲    |  ⒸⓂ  |  ✪   | **Heuristic** |                          -                           |
+| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://proceedings.neurips.cc/paper_files/paper/2022/hash/67d57c32e20fd0a7a302cb81d36e40d5-Abstract-Conference.html?utm_source=chatgpt.com) |  2022<br />NlPS   |  ○   |  ♡   |   ♣▲\|▲    |  ⒸⓂ  |  ✪   | **Heuristic** | [Code](https://github.com/Dao-AILab/flash-attention) |
+|                                                              |                   |      |      |            |      |      |               |                                                      |
+|                                                              |                   |      |      |            |      |      |               |                                                      |
+|                                                              |                   |      |      |            |      |      |               |                                                      |
+|                                                              |                   |      |      |            |      |      |               |                                                      |
 
 ### 2.3 Accelerator Resource Orchestration
 
