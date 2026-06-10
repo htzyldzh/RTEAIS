@@ -61,9 +61,9 @@ If you think this repo is useful, please cite our paper:
 
 **Hardware** :
 
-| CPU  | GPU  | NPU  |
-| :--: | :--: | :--: |
-|  ♡   |  ♢   |  ♧   |
+| CPU  | GPU  | NPU  | SoC  |
+| :--: | :--: | :--: | :--: |
+|  ♡   |  ♢   |  ♧   |  ♤   |
 
 **Constraints and Objectives** :
 
@@ -102,15 +102,20 @@ Heuristic/ Optimization/ Control/ Learning
 
 ### 2.1 Compute Resource Orchestration
 
-|                            Title                             |  year<br />Venue  |  W   |  H   | Obj \| Con | Orc  | Gran |      Policy      |                    Code                     |
-| :----------------------------------------------------------: | :---------------: | :--: | :--: | :--------: | :--: | :--: | :--------------: | :-----------------------------------------: |
-| [DUET: A Compiler-Runtime Subgraph Scheduling Approach for Tensor Programs on a Coupled CPU-GPU Architecture](https://ieeexplore.ieee.org/abstract/document/9460468) |  2021<br />IPDPS  |      |      |            |      |      |                  |                      -                      |
-| [Real-Time Multitasking of Deep Neural Networks With Nvidia Tensorrt ](https://ieeexplore.ieee.org/abstract/document/11315110) |  2025<br />RTSS   |  ○   |  ♡♢  |    ♣\|✤    |  ⒸⒶ  |  ✫   | **Optimization** |                      -                      |
-| [Pantheon: Preemptible Multi-DNN Inference on Mobile Edge GPUs](https://dl.acm.org/doi/abs/10.1145/3643832.3661878) | 2024<br />MOBISYS |  ○   |  ♢   |   ♣♦\|♣    |  ⒸⒶ  |  ✫   | **Optimization** | [Code](https://zenodo.org/records/11094058) |
-| [Miriam: Exploiting Elastic Kernels for Real-time Multi-DNN Inference on Edge GPU](https://dl.acm.org/doi/abs/10.1145/3625687.3625789) | 2023<br />SenSys  |  ○   |  ♡♢  |   ♣♠\|♣    |  ⒸⒶ  |  ✪   |  **Heuristic**   |                      -                      |
-| [[2302.01568\] DynaMIX: Resource Optimization for DNN-Based Real-Time Applications on a Multi-Tasking System](https://arxiv.org/abs/2302.01568) |  2023<br />arXiv  |  ○   |  ♡   |   ♣♦\|♣▲   |  ⒸⓂ  |  ✫   |   Optimization   |                      -                      |
-|                                                              |                   |      |      |            |      |      |                  |                                             |
-|                                                              |                   |      |      |            |      |      |                  |                                             |
+|                            Title                             |  year<br />Venue  |  W   |  H   | Obj \| Con | Orc  | Gran |      Policy      |                      Code                      |
+| :----------------------------------------------------------: | :---------------: | :--: | :--: | :--------: | :--: | :--: | :--------------: | :--------------------------------------------: |
+| [DUET: A Compiler-Runtime Subgraph Scheduling Approach for Tensor Programs on a Coupled CPU-GPU Architecture](https://ieeexplore.ieee.org/abstract/document/9460468) |  2021<br />IPDPS  |  ○   |  ♡♢  |     ♣      |  ⒸⒶ  |  ✫   |  **Heuristic**   |                       -                        |
+| [Real-Time Multitasking of Deep Neural Networks With Nvidia Tensorrt ](https://ieeexplore.ieee.org/abstract/document/11315110) |  2025<br />RTSS   |  ○   |  ♡♢  |    ♣\|✤    |  ⒸⒶ  |  ✫   | **Optimization** |                       -                        |
+| [Pantheon: Preemptible Multi-DNN Inference on Mobile Edge GPUs](https://dl.acm.org/doi/abs/10.1145/3643832.3661878) | 2024<br />MOBISYS |  ○   |  ♢   |   ♣♦\|♣    |  ⒸⒶ  |  ✫   | **Optimization** |  [Code](https://zenodo.org/records/11094058)   |
+| [Miriam: Exploiting Elastic Kernels for Real-time Multi-DNN Inference on Edge GPU](https://dl.acm.org/doi/abs/10.1145/3625687.3625789) | 2023<br />SenSys  |  ○   |  ♡♢  |   ♣♠\|♣    |  ⒸⒶ  |  ✪   |  **Heuristic**   |                       -                        |
+| [DynaMIX: Resource Optimization for DNN-Based Real-Time Applications on a Multi-Tasking System](https://arxiv.org/abs/2302.01568) |  2023<br />arXiv  |  ○   |  ♡   |   ♣♦\|♣▲   |  ⒸⓂ  |  ✫   | **Optimization** |                       -                        |
+| [DREAM: A Dynamic Scheduler for Dynamic Real-time Multi-model ML Workloads ](https://dl.acm.org/doi/abs/10.1145/3623278.3624753) | 2023<br />ASPLOS  |  ●   |  ♧   |   ♣♥\|♣♥   | ⒸⒶⒻ  |  ✦   |  **Heuristic**   |                       -                        |
+| [ODMDEF: On-Device Multi-DNN Execution Framework Utilizing Adaptive Layer-Allocation on General Purpose Cores and Accelerators](https://ieeexplore.ieee.org/abstract/document/9453793) | 2021<br />Access  |  ○   | ♡♢♧  |     ♣      | ⒸⒶⓂ  |  ✫   |   **Learning**   |                       -                        |
+| [AxoNN nergy-aware execution of neural network inference on multi-accelerator heterogeneous SoCs ](https://dl.acm.org/doi/abs/10.1145/3489517.3530572) |   2022<br />DAC   |  ○   | ♡♢♧  |    ♣\|♥    |  ⒶⒻ  |  ✫   | **Optimization** |                       -                        |
+| [Shared Memory-contention-aware Concurrent DNN Execution for Diversely Heterogeneous System-on-Chips ](https://dl.acm.org/doi/abs/10.1145/3627535.3638502) |  2024<br />PPoPP  |  ○   | ♡♢♧  |    ♣♠▲     |  ⒸⒶ  |  ✫   | **Optimization** | [code](https://github.com/ismetdagli/HaX-CoNN) |
+| [GCAPS: GPU Context-Aware Preemptive Priority-based Scheduling for Real-Time Tasks](https://arxiv.org/abs/2406.05221) |  2024<br />arXiv  |      |      |            |      |      |                  |                                                |
+|                                                              |                   |      |      |            |      |      |                  |                                                |
+|                                                              |                   |      |      |            |      |      |                  |                                                |
 
 
 
