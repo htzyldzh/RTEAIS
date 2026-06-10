@@ -22,7 +22,7 @@ This survey provides a comprehensive review of runtime scheduling and resource o
   - [3.3 Control-Theoretic Scheduling](#33-Control-Theoretic-Scheduling)
   - [3.4 Profile-Guided and Learning-Driven Scheduling](34-Profile-Guided-and-Learning-Driven-Scheduling)
 - [4. Design Tradeoffs and System Insights](#4-Design-Tradeoffs-and-System-Insights)
-  - [4.1 Granularity Tradeoffs: Control Precision vs. Management Overhead](#41-Granularity-Tradeoffs:-Control-Precision-vs-Management-Overhead)
+  - [4.1 Granularity Tradeoffs: Control Precision vs. Management Overhead](#41-Granularity-Tradeoffs-Control-Precision-vs-Management-Overhead)
   - [4.2 Compute--Memory Tradeoffs: Compute Throughput vs. Memory Efficiency](#4.2 Compute--Memory Tradeoffs: Compute Throughput vs. Memory Efficiency)
   - [4.3 Predictability--Adaptivity Tradeoffs: Guarantees vs. Flexibility](#4.3 Predictability--Adaptivity Tradeoffs: Guarantees vs. Flexibility)
   - [4.4 Isolation--Sharing Tradeoffs: Safety Guarantees vs. System Efficiency](#4.4 Isolation--Sharing Tradeoffs: Safety Guarantees vs. System Efficiency)
