@@ -10,13 +10,13 @@ This survey provides a comprehensive review of runtime scheduling and resource o
 
 ## Contents
 
-- [1. Related Survey](#1. Related Survey)
-- [2. Resource Orchestration Mechanisms](#2. Resource Orchestration Mechanisms)
-  - [2.1 Compute Resource Orchestration](#2.1 Compute Resource Orchestration)
-  - [2.2 Memory Resource Orchestration](#2.2 Memory Resource Orchestration)
-  - [2.3 Accelerator Resource Orchestration](#2.3 Accelerator Resource Orchestration)
-  - [2.4 Processor Frequency and Energy Orchestration](#2.4 Processor Frequency and Energy Orchestration)
-- [3. Runtime Decision-Making Strategies](#3. Runtime Decision-Making Strategies)
+- [1. Related Survey](#1. Related-Survey)
+- [2. Resource Orchestration Mechanisms](#2. Resource-Orchestration-Mechanisms)
+  - [2.1 Compute Resource Orchestration](#2.1 Compute-Resource-Orchestration)
+  - [2.2 Memory Resource Orchestration](#2.2 Memory-Resource-Orchestration)
+  - [2.3 Accelerator Resource Orchestration](#2.3 Accelerator-Resource-Orchestration)
+  - [2.4 Processor Frequency and Energy Orchestration](#2.4 Processor-Frequency-and-Energy-Orchestration)
+- [3. Runtime Decision-Making Strategies](#3. Runtime-Decision-Making-Strategies)
   - [3.1 Rule-Based and Priority-Driven Scheduling](#3.1 Rule-Based and Priority-Driven Scheduling)
   - [3.2 Optimization-Based Scheduling](#3.2 Optimization-Based Scheduling)
   - [3.3 Control-Theoretic Scheduling](#3.3 Control-Theoretic Scheduling)
