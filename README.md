@@ -238,31 +238,78 @@ Heuristic/ Optimization/ Control/ Learning
 
 ### 4.1 Granularity Tradeoffs: Control Precision vs. Management Overhead
 
-
+| Title                                                        |        Author / Year / Venue         | Key Mechanism / Contribution                                 |  W   |  H   | Obj \| Con | Orc  | Gran |      Policy      |                             Code                             |
+| :----------------------------------------------------------- | :----------------------------------: | ------------------------------------------------------------ | :--: | :--: | :--------: | :--: | :--: | :--------------: | :----------------------------------------------------------: |
+| [Enabling Latency-Sensitive DNN Inference via Joint Optimization of Model Surgery and Resource Allocation in Heterogeneous Edge ](https://dl.acm.org/doi/abs/10.1145/3545008.3545071) |      Huang et al.<br/>ICPP 2022      | Model-level adaptation: low overhead but coarse control over model variants; joint model-surgery and resource-allocation optimization. |  ○   |  ♡♢  |     ♣      |  Ⓒ   |  ✫   | **Optimization** |                              -                               |
+| [Throughput Maximization of Delay-Aware DNN Inference in Edge Computing by Exploring DNN Model Partitioning and Inference Parallelism](https://ieeexplore.ieee.org/abstract/document/9606540) |     Li et al.<br/>IEEE TMC 2021      | Partition-level control for delay-aware throughput; exploits pipeline parallelism at partition-point cost. |  ●   |  ♡   |    ♠\|♣    |  Ⓒ   |  ✫   | **Optimization** |                              -                               |
+| [PArtNNer: Platform-Agnostic Adaptive Edge-Cloud DNN Partitioning for Minimizing End-to-End Latency ](https://dl.acm.org/doi/full/10.1145/3630266) |    Ghosh et al.<br/>ACM TECS 2024    | Platform-agnostic adaptive edge–cloud partitioning; portable but must reason about device/comm/latency. |  ○   |  ♡♢  |     ♣      |  Ⓒ   |  ✫   |  **Heuristic**   |                              -                               |
+| [Inferencing on Edge Devices: A Time- and Space-aware Co-scheduling Approach ](https://dl.acm.org/doi/full/10.1145/3576197) |  Pereira et al.<br/>ACM TODAES 2023  | Task/pass-level co-scheduling reasoning about passes and GPU space; balances flexibility and analyzability; concurrency enlarges memory footprint. |  ○   |  ♢   |    ♣\|▲    |  ⒸⓂ  |  ✪   | **Optimization** |                              -                               |
+| [AdaMEC: Towards a Context-adaptive and Dynamically Combinable DNN Deployment Framework for Mobile Edge Computing ](https://dl.acm.org/doi/full/10.1145/3630098) |    Pang et al.<br/>ACM TOSN 2023     | Operator-level atoms assembled per mobile-edge context; rich adaptation but combinatorial profiling cost. |  ○   |  ♡♢  |    ♣\|▲    |  ⒸⓂ  |  ✪   |  **Heuristic**   |                              -                               |
+| [Crane: Inter-Layer Scheduling Framework for DNN Inference and Training Co-Support on Tiled Architecture ](https://dl.acm.org/doi/full/10.1145/3725843.3756023) |      Gong et al.<br/>MICRO 2025      | Inter-layer scheduling for tiled architectures with inference/training co-execution. |  ○   |  ♧   |     ♣♥     |  ⒸⓂ  |  ✫   | **Optimization** |                              -                               |
+| [Stream: Design Space Exploration of Layer-Fused DNNs on Heterogeneous Dataflow Accelerators](https://ieeexplore.ieee.org/abstract/document/10713407) |    Symons et al.<br/>IEEE TC 2024    | Layer-fused execution on dataflow accelerators; cuts data movement but reduces scheduling flexibility. |  ○   |  ♧   |     ♣      |  ⒸⓂ  |  ✪   | **Optimization** |       [Code](https://github.com/KULeuven-MICAS/stream)       |
+| [Real-time, Work-conserving GPU Scheduling for Concurrent DNN Inference](https://dl.acm.org/doi/full/10.1145/3768622) |     Han et al.<br/>ACM TOCS 2025     | Kernel/command-level real-time work-conserving GPU scheduling; reallocates unused GPU resources; high precision/utilization at higher bookkeeping cost and more interference. |  ●   |  ♢   |     ♣♠     |  Ⓒ   |  ✪   |  **Heuristic**   |                              -                               |
+| [Improving DNN Inference Throughput Using Practical, Per-Input Compute Adaptation](https://dl.acm.org/doi/abs/10.1145/3694715.3695978) | Padmanabha Iyer et al.<br/>SOSP 2024 | Request-level per-input compute adaptation; efficient but adds runtime variability. |  ●   |  ♢   |    ♠\|♣    |  Ⓒ   |  ✫   | **Optimization** |                              -                               |
+| [ZeroSwap: Minimizing Swap Overhead for Real-Time Multi-DNN Inference via SSD-based GPU Memory Extension](https://rtcl.dgist.ac.kr/index.php/zeroswap) |      Kang et al.<br/>RTAS 2026       | Memory-level control via SSD-based GPU memory extension; enables infeasible workloads with swap overhead. |  ○   |  ♡♢  |   ♣\|♣▲    |  Ⓜ   |  ✫   | **Optimization** | [Code](https://github.com/fredrickang/zeroswap_public/tree/main) |
 
 
 
 ### 4.2 Compute-Memory Tradeoffs: Compute Throughput vs. Memory Efficiency
 
-
+| Title | Author / Year / Venue | Key Mechanism / Contribution |  W   |  H   | Obj \| Con | Orc  | Gran | Policy | Code |
+| :---- | :-------------------: | ---------------------------- | :--: | :--: | :--------: | :--: | :--: | :----: | :--: |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
 
 
 
 ### 4.3 Predictability-Adaptivity Tradeoffs: Guarantees vs. Flexibility
 
-
+| Title | Author / Year / Venue | Key Mechanism / Contribution |  W   |  H   | Obj \| Con | Orc  | Gran | Policy | Code |
+| :---- | :-------------------: | ---------------------------- | :--: | :--: | :--------: | :--: | :--: | :----: | :--: |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
 
 
 
 ### 4.4 Isolation-Sharing Tradeoffs: Safety Guarantees vs. System Efficiency
 
-
+| Title | Author / Year / Venue | Key Mechanism / Contribution |  W   |  H   | Obj \| Con | Orc  | Gran | Policy | Code |
+| :---- | :-------------------: | ---------------------------- | :--: | :--: | :--------: | :--: | :--: | :----: | :--: |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
 
 
 
 ### 4.5 Latency-Energy-Accuracy Tradeoffs: Multi-Objective Tension
 
-
+| Title | Author / Year / Venue | Key Mechanism / Contribution |  W   |  H   | Obj \| Con | Orc  | Gran | Policy | Code |
+| :---- | :-------------------: | ---------------------------- | :--: | :--: | :--------: | :--: | :--: | :----: | :--: |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
 
 
 
@@ -270,23 +317,59 @@ Heuristic/ Optimization/ Control/ Learning
 
 ### 5.1 LLM-Aware Runtime Systems
 
-
+| Title | Author / Year / Venue | Key Mechanism / Contribution |  W   |  H   | Obj \| Con | Orc  | Gran | Policy | Code |
+| :---- | :-------------------: | ---------------------------- | :--: | :--: | :--------: | :--: | :--: | :----: | :--: |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
 
 
 
 ### 5.2 Memory-Centric Resource Management
 
-
+| Title | Author / Year / Venue | Key Mechanism / Contribution |  W   |  H   | Obj \| Con | Orc  | Gran | Policy | Code |
+| :---- | :-------------------: | ---------------------------- | :--: | :--: | :--------: | :--: | :--: | :----: | :--: |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
 
 
 
 ### 5.3 AI-Native Runtime Systems
 
-
+| Title | Author / Year / Venue | Key Mechanism / Contribution |  W   |  H   | Obj \| Con | Orc  | Gran | Policy | Code |
+| :---- | :-------------------: | ---------------------------- | :--: | :--: | :--------: | :--: | :--: | :----: | :--: |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
 
 
 
 ### 5.4 Verified and Explainable Scheduling
 
-
+| Title | Author / Year / Venue | Key Mechanism / Contribution |  W   |  H   | Obj \| Con | Orc  | Gran | Policy | Code |
+| :---- | :-------------------: | ---------------------------- | :--: | :--: | :--------: | :--: | :--: | :----: | :--: |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
+|       |                       |                              |      |      |            |      |      |        |      |
 
