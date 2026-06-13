@@ -255,16 +255,17 @@ Heuristic/ Optimization/ Control/ Learning
 
 ### 4.2 Compute-Memory Tradeoffs: Compute Throughput vs. Memory Efficiency
 
-| Title | Author / Year / Venue | Key Mechanism / Contribution |  W   |  H   | Obj \| Con | Orc  | Gran | Policy | Code |
-| :---- | :-------------------: | ---------------------------- | :--: | :--: | :--------: | :--: | :--: | :----: | :--: |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
+| Title                                                        | Author / Year / Venue  | Key Mechanism / Contribution |  W   |  H   | Obj \| Con | Orc  | Gran | Policy | Code |
+| :----------------------------------------------------------- | :--------------------: | ---------------------------- | :--: | :--: | :--------: | :--: | :--: | :----: | :--: |
+| Memory-efficient DNN training on mobile devices              |                        |                              |      |      |            |      |      |        |      |
+| Occamy: Memory-efficient GPU compiler for DNN inference      |                        |                              |      |      |            |      |      |        |      |
+| MIME: adapting a single neural network for multi-task inference with memory-efficient dynamic pruning |   huang2022enabling    |                              |      |      |            |      |      |        |      |
+| Parallelfusion: towards maximum utilization of mobile gpu for dnn inference | Pereira2023Inferencing |                              |      |      |            |      |      |        |      |
+| Elasticroom: Multi-tenant dnn inference engine via co-design with resource-constrained compilation and strong priority scheduling |                        |                              |      |      |            |      |      |        |      |
+| SEEB-GPU: Early-Exit Aware Scheduling and Batching for Edge GPU Inference |                        |                              |      |      |            |      |      |        |      |
+| PASK: Cold Start Mitigation for Inference with Proactive and Selective Kernel Loading on GPUs |                        |                              |      |      |            |      |      |        |      |
+| RAMS: Runtime Adaptive Memory Scaling for Tiny Deep Learning on IoT Devices |                        |                              |      |      |            |      |      |        |      |
+| Breaking the edge: Enabling efficient neural network inference on integrated edge devices |                        |                              |      |      |            |      |      |        |      |
 
 
 
