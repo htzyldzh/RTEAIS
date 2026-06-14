@@ -325,26 +325,25 @@ Heuristic/ Optimization/ Control/ Learning
 
 ### 5.1 LLM-Aware Runtime Systems
 
-| Title                                                        |    Author / Year / Venue    | Key Mechanism / Contribution |  W   |  H   | Obj \| Con | Orc  | Gran | Policy |                         Code                          |
-| :----------------------------------------------------------- | :-------------------------: | ---------------------------- | :--: | :--: | :--------: | :--: | :--: | :----: | :---------------------------------------------------: |
-| [MobileLLM: Optimizing Sub-billion Parameter Language Models for On-Device Use Cases](https://openreview.net/forum?id=EIGbXbxcUQ) |  liu et al.<br/>ICML 2024   |                              |      |      |            |      |      |        | [Code](https://github.com/facebookresearch/MobileLLM) |
-| [EdgeLLM: Fast On-Device LLM Inference With Speculative Decoding](https://ieeexplore.ieee.org/abstract/document/10812936) | Xu et al.<br/>IEEE TMC 2025 |                              |      |      |            |      |      |        |                           -                           |
-| [CLONE: Customizing LLMs for Efficient Latency-Aware Inference at the Edge](https://www.usenix.org/conference/atc25/presentation/tian) |  Tian et al.<br/>ATC 2025   |                              |      |      |            |      |      |        |       [Code](https://github.com/qxpBlog/CLONE)        |
+| Title                                                        |    Author / Year / Venue    | Key Mechanism / Contribution                                 |  W   |  H   | Obj \| Con | Orc  | Gran |    Policy     |                         Code                          |
+| :----------------------------------------------------------- | :-------------------------: | ------------------------------------------------------------ | :--: | :--: | :--------: | :--: | :--: | :-----------: | :---------------------------------------------------: |
+| [MobileLLM: Optimizing Sub-billion Parameter Language Models for On-Device Use Cases](https://openreview.net/forum?id=EIGbXbxcUQ) |  liu et al.<br/>ICML 2024   | Designs deep-thin sub-billion LLMs with weight sharing for efficient on-device deployment. |  ❖   |  ♤   |    ♦\|▲    |  Ⓜ   |  ✦   | **Heuristic** | [Code](https://github.com/facebookresearch/MobileLLM) |
+| [EdgeLLM: Fast On-Device LLM Inference With Speculative Decoding](https://ieeexplore.ieee.org/abstract/document/10812936) | Xu et al.<br/>IEEE TMC 2025 | Accelerates oversized on-device LLMs using adaptive speculative decoding and compute-I/O pipelining. |  ❖   |  ♤   |    ♠\|▲    |  Ⓜ   |  ★   | **Heuristic** |                           -                           |
+| [CLONE: Customizing LLMs for Efficient Latency-Aware Inference at the Edge](https://www.usenix.org/conference/atc25/presentation/tian) |  Tian et al.<br/>ATC 2025   | Co-optimizes LLM pruning, LoRA routing, and learning-based DVFS for latency-aware edge inference. |  ❖   |  ♤   |    ♥\|♣    |  Ⓕ   |  ✫   | **Learning**  |       [Code](https://github.com/qxpBlog/CLONE)        |
 
 
 
 ### 5.2 Memory-Centric Resource Management
 
-| Title | Author / Year / Venue | Key Mechanism / Contribution |  W   |  H   | Obj \| Con | Orc  | Gran | Policy | Code |
-| :---- | :-------------------: | ---------------------------- | :--: | :--: | :--------: | :--: | :--: | :----: | :--: |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
+| Title                                                        |     Author / Year / Venue     | Key Mechanism / Contribution                                 |  W   |  H   | Obj \| Con | Orc  | Gran |      Policy      |                             Code                             |
+| :----------------------------------------------------------- | :---------------------------: | ------------------------------------------------------------ | :--: | :--: | :--------: | :--: | :--: | :--------------: | :----------------------------------------------------------: |
+| [Llm in a flash: Efficient large language model inference with limited memory](https://aclanthology.org/2024.acl-long.678.pdf) |    Llm et al.<br/>ACL 2024    | Flash-aware windowing and row-column bundling enable LLM inference beyond DRAM capacity. |  ❖   |  ♤   |    ♣\|▲    |  Ⓜ   |  ✫   |  **Heuristic**   |                              -                               |
+| [POET: Training Neural Networks on Tiny Devices with Integrated Rematerialization and Paging](https://proceedings.mlr.press/v162/patil22b.html) |  Patil et al.<br/>ICML 2022   | Joint MILP optimization of rematerialization and paging enables energy-efficient training on tiny devices. |  ○   |  ♤   |    ♥\|▲    |  Ⓜ   |  ✫   | **Optimization** |         [Code](https://github.com/ShishirPatil/poet)         |
+| [MNN-LLM: A Generic Inference Engine for Fast Large Language Model Deployment on Mobile Devices](https://dl.acm.org/doi/full/10.1145/3700410.3702126) | Wang et al.<br/>MMAsia  2024  | A mobile LLM engine combining quantization, DRAM-Flash storage, and hardware-specific operator optimization. |  ❖   |  ♤   |    ♣\|▲    |  Ⓜ   |  ✦   |  **Heuristic**   | [Code](https://github.com/alibaba/MNN/blob/master/project/android/apps/MnnLlmApp/README_CN.md) |
+| [m-LLM: A Multi-Dimensional Optimization Framework for LLM Inference on Mobile Devices](https://ieeexplore.ieee.org/abstract/document/11075620) | Liu et al.<br/>IEEE TPDS 2025 | Multi-dimensional mobile LLM optimization across model customization, prompt compression, pipelining, and resource scheduling. |  ❖   |  ♤   |   ♣♦♥\|▲   |  Ⓜ   |  ✦   |   **Learning**   |      [Code](https://github.com/UbiquitousLearning/mLLM)      |
+| [KVPR: Efficient LLM Inference with I/O-Aware KV Cache Partial Recomputation - ACL Anthology](https://aclanthology.org/2025.findings-acl.997/) |   Jiang et al.<br/>ACL 2025   | I/O-aware partial KV recomputation overlaps GPU computation with CPU-GPU KV transfer. |  ❖   |  ♢   |   ♣♠\|▲    |  Ⓜ   |  ✫   | **Optimization** |           [Code](https://github.com/chaoyij/KVPR)            |
+| [Kelle: Co-design KV Caching and eDRAM for Efficient LLM Serving in Edge Computing ](https://dl.acm.org/doi/full/10.1145/3725843.3756071) |   Xia et al.<br/>MICRO 2025   | Co-designs eDRAM KV caching with eviction, recomputation, refresh control, and specialized acceleration. |  ❖   |  ♧   |   ♣♥\|▲    |  Ⓜ   |  ✫   |  **Heuristic**   |                              -                               |
+| [Hybrid SLM and LLM for Edge-Cloud Collaborative Inference ](https://dl.acm.org/doi/abs/10.1145/3662006.3662067) |  Hao et al.<br/>MobiSys 2024  | Enables token-level edge-cloud collaboration using SLM generation and selective LLM verification. |  ❖   |  ♤   |    ♦\|▲    |  ⒸⓂ  |  ★   |  **Heuristic**   |                              -                               |
 
 
 
