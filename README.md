@@ -349,29 +349,23 @@ Heuristic/ Optimization/ Control/ Learning
 
 ### 5.3 AI-Native Runtime Systems
 
-| Title | Author / Year / Venue | Key Mechanism / Contribution |  W   |  H   | Obj \| Con | Orc  | Gran | Policy | Code |
-| :---- | :-------------------: | ---------------------------- | :--: | :--: | :--------: | :--: | :--: | :----: | :--: |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
+| Title                                                        |    Author / Year / Venue    | Key Mechanism / Contribution                                 |  W   |  H   | Obj \| Con | Orc  | Gran |      Policy      |                     Code                     |
+| :----------------------------------------------------------- | :-------------------------: | ------------------------------------------------------------ | :--: | :--: | :--------: | :--: | :--: | :--------------: | :------------------------------------------: |
+| [EdgeML: An AutoML Framework for Real-Time Deep Learning on the Edge](https://dl.acm.org/doi/abs/10.1145/3450268.3453520) | Zhao et al.<br/>IoTDI 2021  | Uses RL to jointly tune DNN offloading and early-exit policies under runtime dynamics. |  ●   |  ♤   |    ♣♦♥     |  Ⓒ   |  ✦   |   **Learning**   | [Code](https://github.com/Kyrie-Zhao/EdgeML) |
+| [Automated Runtime-Aware Scheduling for Multi-Tenant DNN Inference on GPU](https://ieeexplore.ieee.org/abstract/document/9643501) |  Yu et al.<br/>ICCAD 2021   | Automates cross-level GPU operator scheduling to balance resource utilization for multi-tenant DNN inference. |  ○   |  ♢   |     ♣      |  Ⓒ   |  ✪   | **Optimization** |                      -                       |
+| [EdgeTimer: Adaptive Multi-Timescale Scheduling in Mobile Edge Computing with Deep Reinforcement Learning ](https://ieeexplore.ieee.org/abstract/document/10621305) | Hao et al.<br/>INFOCOM 2024 | Learns adaptive multi-timescale MEC scheduling updates via hierarchical safe multi-agent DRL. |  ●   |  ♡   |   ♣\|♣▲    |  ⒸⓂ  |  ✦   |   **Learning**   |                      -                       |
 
 
 
 ### 5.4 Verified and Explainable Scheduling
 
-| Title | Author / Year / Venue | Key Mechanism / Contribution |  W   |  H   | Obj \| Con | Orc  | Gran | Policy | Code |
-| :---- | :-------------------: | ---------------------------- | :--: | :--: | :--------: | :--: | :--: | :----: | :--: |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
-|       |                       |                              |      |      |            |      |      |        |      |
+| Title                                                        |    Author / Year / Venue     | Key Mechanism / Contribution                                 |  W   |  H   | Obj \| Con | Orc  | Gran |      Policy      |                       Code                        |
+| :----------------------------------------------------------- | :--------------------------: | ------------------------------------------------------------ | :--: | :--: | :--------: | :--: | :--: | :--------------: | :-----------------------------------------------: |
+| [Decntr: Optimizing Safety and Schedulability with Multi-Mode Control and Resource Allocation Co-Design](https://ieeexplore.ieee.org/abstract/document/10568070) | Gifford et al.<br/>RTAS 2024 | Co-designs switchable controllers, sampling periods, and resource allocation for safe, schedulable multi-mode CPS. |  ●   |  ♡   |     ♣✤     |  ⒸⓂ  |  ✦   | **Optimization** |                         -                         |
+| [Integrated Real-Time Control and Scheduling for Safety Critical Cyber-Physical Systems ](https://ieeexplore.ieee.org/abstract/document/11018773) | Sudvarg et al.<br/>RTAS 2025 | Optimizes controller frequencies online to preserve safety, schedulability, and control performance. |  ●   |  ♡   |     ♣✤     |  Ⓒ   |  ✦   | **Optimization** |                         -                         |
+| [Deadline-Safe Reach-Avoid Control Synthesis for Cyber-Physical Systems with Reinforcement Learning ](https://ieeexplore.ieee.org/abstract/document/10844742) |   Liu et al.<br/>RTSS 2024   | Designs deadline-aware RL rewards and R-MDPs for safe reach-avoid control synthesis. |  ○   |  -   |     ♣✤     |  -   |  ✦   |   **Learning**   |                         -                         |
+| [Optimal Runtime Assurance via Reinforcement Learning](https://www.computer.org/csdl/proceedings-article/iccps/2024/692700a067/1YdXxNJMt6E) | Miller et al.<br/>ICCPS 2024 | Uses reward-shaped RL to synthesize safety-guaranteed, performance-optimized runtime assurance policies. |  ○   |  -   |     ✤      |  Ⓒ   |  ✦   |   **Learning**   |                         -                         |
+| [Recovery-Guaranteed Sensor Attack Detection for Cyber-Physical Systems ](https://ieeexplore.ieee.org/abstract/document/11018669) |   Xu et al.<br/>RTAS 2025    | Dynamically adjusts attack detection thresholds to guarantee timely, safe recovery after sensor attacks. |  ○   |  -   |     ♣✤     |  -   |  ✦   | **Optimization** |                         -                         |
+| [Accelerating Timing Specification Verification of Interrupt-Driven Real-Time Systems](https://ieeexplore.ieee.org/abstract/document/11315067) |   Shi et al.<br/>RTSS 2025   | Uses parcel abstraction and FOL encoding to accelerate interrupt-driven real-time timing verification. |  ○   |  -   |     ♣✤     |  -   |  -   |        -         |                         -                         |
+| [DERCA: DetERministic Cycle-Level Accelerator on Reconfigurable Platforms in DNN-Enabled Real-Time Safety-Critical Systems ](https://ieeexplore.ieee.org/document/11315054) |   Ji et al.<br/>RTSS 2025    | Enables cycle-deterministic intra-layer preemptive DNN accelerator scheduling with optimized preemption points. |  ○   |  ♧   |   ♣✿\|♣✤   |  Ⓐ   |  ✪   |  **Heuristic**   | [Code](https://github.com/arc-research-lab/DERCA) |
 
