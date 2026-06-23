@@ -447,6 +447,7 @@ On-device LLM systems have begun to optimize model architecture, speculative dec
 | [MobileLLM: Optimizing Sub-Billion-Parameter Language Models for On-Device Use Cases](https://openreview.net/forum?id=EIGbXbxcUQ) | Liu et al., ICML 2024 | Designs deep-and-thin sub-billion-parameter LLMs with weight sharing for on-device use. | [Code](https://github.com/facebookresearch/MobileLLM) |
 | [EdgeLLM: Fast On-Device LLM Inference with Speculative Decoding](https://ieeexplore.ieee.org/abstract/document/10812936) | Xu et al., IEEE TMC 2025 | Combines adaptive speculative decoding with compute–I/O pipelining. | - |
 | [CLONE: Customizing LLMs for Efficient Latency-Aware Inference at the Edge](https://www.usenix.org/conference/atc25/presentation/tian) | Tian et al., USENIX ATC 2025 | Co-optimizes pruning, LoRA routing, and learning-based DVFS. | [Code](https://github.com/qxpBlog/CLONE) |
+| [Hybrid SLM and LLM for Edge–Cloud Collaborative Inference](https://dl.acm.org/doi/abs/10.1145/3662006.3662067) | Hao et al., MobiSys 2024 | Uses an SLM at the edge and selective LLM verification in the cloud at token granularity. | - |
 
 ### 6.2 Dynamic Memory Orchestration for Generative and Multi-Model Workloads
 
@@ -460,7 +461,6 @@ Future memory managers must coordinate model weights, activations, persistent co
 | [m-LLM: A Multi-Dimensional Optimization Framework for LLM Inference on Mobile Devices](https://ieeexplore.ieee.org/abstract/document/11075620) | Liu et al., IEEE TPDS 2025 | Optimizes model customization, prompt compression, pipelining, and resource scheduling. | [Code](https://github.com/UbiquitousLearning/mLLM) |
 | [KVPR: Efficient LLM Inference with I/O-Aware KV-Cache Partial Recomputation](https://aclanthology.org/2025.findings-acl.997/) | Jiang et al., Findings of ACL 2025 | Overlaps partial KV recomputation with host–device KV transfer. | [Code](https://github.com/chaoyij/KVPR) |
 | [Kelle: Co-Designing KV Caching and eDRAM for Efficient LLM Serving in Edge Computing](https://dl.acm.org/doi/full/10.1145/3725843.3756071) | Xia et al., MICRO 2025 | Co-designs eDRAM caching, eviction, recomputation, refresh control, and specialized acceleration. | - |
-| [Hybrid SLM and LLM for Edge–Cloud Collaborative Inference](https://dl.acm.org/doi/abs/10.1145/3662006.3662067) | Hao et al., MobiSys 2024 | Uses an SLM at the edge and selective LLM verification in the cloud at token granularity. | - |
 
 ### 6.3 AI-Native Runtime Systems
 
