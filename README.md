@@ -16,13 +16,9 @@
 This repository accompanies the survey paper **“Real-Time Embedded AI Systems: Scheduling and Resource Orchestration for Multi-DNN Edge Intelligence.”** It maintains a structured and continuously updated collection of research on runtime scheduling and resource orchestration for embedded AI systems.
 
 The survey focuses on systems that execute one or more AI workloads under timing and resource constraints on heterogeneous embedded platforms. Rather than organizing prior work only by application or hardware type, we analyze each system along six dimensions:
-
 $$
-
 \mathcal{S}=(W,H,C,O,G,\Pi),
-
 $$
-
 where \(W\) denotes workload characteristics, \(H\) hardware platforms, \(C\) runtime constraints, \(O\) optimization objectives, \(G\) orchestration granularity, and \(\Pi\) the runtime decision policy.
 
 The repository serves three purposes:
