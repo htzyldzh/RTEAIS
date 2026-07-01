@@ -15,20 +15,20 @@
 
 This repository accompanies the survey paper **“Real-Time Embedded AI Systems: Scheduling and Resource Orchestration for Multi-DNN Edge Intelligence.”** It maintains a structured and continuously updated collection of research on runtime scheduling and resource orchestration for embedded AI systems.
 
-The survey focuses on systems that execute one or more AI workloads under timing and resource constraints on heterogeneous embedded platforms. Rather than organizing prior work only by application or hardware type, we analyze each system along six dimensions:
+The survey focuses on systems that execute one or more AI workloads under timing and resource constraints on heterogeneous embedded platforms. Rather than organizing prior work only by application or hardware type, we analyze each system along the paper's seven-dimensional taxonomy:
 
 
 $$
-\mathcal{S}=(W,H,C,O,G,\Pi),
+\mathcal{S}=(W,H,C,O,G,\Gamma,\Pi),
 $$
 
 
-where \(W\) denotes workload characteristics, \(H\) hardware platforms, \(C\) runtime constraints, \(O\) optimization objectives, \(G\) orchestration granularity, and \(\Pi\) the runtime decision policy.
+where \(W\) denotes workload characteristics, \(H\) hardware and resource characteristics, \(C\) runtime constraints, \(O\) orchestration actions, \(G\) optimization objectives, \(\Gamma\) orchestration granularity, and \(\Pi\) decision-making policies.
 
 The repository serves three purposes:
 
 1. provide a searchable collection of representative systems and their artifacts;
-2. expose common mechanisms across compute, memory, accelerator, and power orchestration; and
+2. expose common mechanisms across compute execution, memory, accelerator, and processor-frequency/energy orchestration; and
 3. summarize design tradeoffs and open problems for future real-time embedded AI runtimes.
 
 ## Scope
@@ -54,33 +54,33 @@ The repository serves three purposes:
 - [1. Related Surveys](#1-related-surveys)
 - [2. Unified Design Space](#2-unified-design-space)
 - [3. Resource Orchestration Mechanisms](#3-resource-orchestration-mechanisms)
-  - [3.1 Compute Resource Orchestration](#31-compute-resource-orchestration)
+  - [3.1 Compute Execution Orchestration](#31-compute-execution-orchestration)
   - [3.2 Memory Resource Orchestration](#32-memory-resource-orchestration)
   - [3.3 Accelerator Resource Orchestration](#33-accelerator-resource-orchestration)
-  - [3.4 Power and Thermal Orchestration](#34-power-and-thermal-orchestration)
+  - [3.4 Processor-Frequency and Energy Orchestration](#34-processor-frequency-and-energy-orchestration)
 - [4. Runtime Decision-Making Strategies](#4-runtime-decision-making-strategies)
   - [4.1 Rule-Based and Priority-Driven Scheduling](#41-rule-based-and-priority-driven-scheduling)
   - [4.2 Optimization-Based Scheduling](#42-optimization-based-scheduling)
-  - [4.3 Control-Theoretic Scheduling](#43-control-theoretic-scheduling)
-  - [4.4 Profile-Guided and Learning-Driven Scheduling](#44-profile-guided-and-learning-driven-scheduling)
+  - [4.3 Control-Theoretic Scheduling and Runtime Adaptation](#43-control-theoretic-scheduling-and-runtime-adaptation)
+  - [4.4 Profile-Guided Decision Support and Learning-Driven Scheduling](#44-profile-guided-decision-support-and-learning-driven-scheduling)
 - [5. Design Tradeoffs and System Insights](#5-design-tradeoffs-and-system-insights)
   - [5.1 Granularity Tradeoffs](#51-granularity-tradeoffs-control-precision-vs-management-overhead)
   - [5.2 Compute--Memory Tradeoffs](#52-compute--memory-tradeoffs-compute-throughput-vs-memory-efficiency)
   - [5.3 Predictability--Adaptivity Tradeoffs](#53-predictability--adaptivity-tradeoffs-guarantees-vs-flexibility)
-  - [5.4 Isolation--Sharing Tradeoffs](#54-isolation--sharing-tradeoffs-temporal-isolation-vs-system-efficiency)
+  - [5.4 Isolation--Sharing Tradeoffs](#54-isolation-sharing-tradeoffs-isolation-guarantees-vs-resource-efficiency)
   - [5.5 Latency--Energy--Accuracy Tradeoffs](#55-latency--energy--accuracy-tradeoffs-multi-objective-tension)
 - [6. Open Challenges and Future Directions](#6-open-challenges-and-future-directions)
-  - [6.1 LLM-Aware Runtime Orchestration](#61-llm-aware-runtime-orchestration)
-  - [6.2 Dynamic Memory Orchestration](#62-dynamic-memory-orchestration-for-generative-and-multi-model-workloads)
+  - [6.1 LLM-Aware Runtime Systems](#61-llm-aware-runtime-systems)
+  - [6.2 Memory-Centric Resource Management](#62-memory-centric-resource-management)
   - [6.3 AI-Native Runtime Systems](#63-ai-native-runtime-systems)
-  - [6.4 Assured and Analyzable Scheduling](#64-assured-and-analyzable-scheduling)
+  - [6.4 Timing-Assured and Explainable Orchestration](#64-timing-assured-and-explainable-orchestration)
 - [Citation](#citation)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## 1. Related Surveys
 
-Existing surveys cover edge intelligence, embedded deep-learning infrastructure, GPU datacenter scheduling, vehicular edge computing, and resource-constrained LLM deployment. This survey differs by jointly examining **real-time constraints, multi-DNN concurrency, heterogeneous embedded hardware, runtime decision policies, orchestration granularity, and system-level tradeoffs**.
+Existing surveys cover edge intelligence, embedded deep-learning infrastructure, GPU datacenter scheduling, vehicular edge computing, and resource-constrained LLM deployment. This survey differs by jointly examining **real-time constraints, multi-DNN concurrency, heterogeneous embedded hardware, runtime decision policies, orchestration actions, optimization objectives, orchestration granularity, and system-level tradeoffs**.
 
 | Survey | Venue | Year | Main Scope | Difference from This Survey | Artifact |
 |---|---:|:---:|---|---|:---:|
@@ -93,61 +93,64 @@ Existing surveys cover edge intelligence, embedded deep-learning infrastructure,
 
 ## 2. Unified Design Space
 
-Each paper is classified with the following dimensions. The labels are intentionally textual to avoid opaque symbol encodings.
+Each paper is classified with the following dimensions. The symbols and meanings follow the final paper exactly.
 
-| Dimension | Meaning | Common Values |
+| Dimension | Question Answered | Common Values |
 |---|---|---|
-| **Workload (W)** | Runtime behavior and dependency structure | Static, Dynamic, Pipeline, Generative |
-| **Hardware (H)** | Processing and platform resources | CPU, GPU, NPU, DSP, FPGA, TPU, MCU, heterogeneous SoC |
-| **Constraints (C)** | Conditions that must be respected | Deadline, memory capacity, energy budget, thermal limit, predictability |
-| **Objectives (O)** | Metrics optimized by the runtime | Latency, throughput, energy, accuracy, utilization, memory footprint |
-| **Granularity (G)** | Unit controlled by the runtime | Request, model, batch, stage, subgraph, layer, operator, kernel, token, memory block |
-| **Policy (Π)** | Mechanism used to make decisions | Heuristic, optimization, control, profiling, supervised learning, reinforcement learning |
+| **Workload (W)** | What is executed? | Static, dynamic, pipeline-oriented, generative |
+| **Hardware (H)** | Where can it execute? | CPU, GPU, NPU/DLA, DSP, FPGA, dataflow accelerator, MCU, heterogeneous SoC, edge-cloud resources |
+| **Constraints (C)** | What must be satisfied? | Deadline, memory capacity, bandwidth, energy budget, thermal limit, accuracy floor, predictability |
+| **Orchestration Actions (O)** | What can the runtime change? | Dispatching, admission, batching, partitioning, placement, paging, prefetching, sharing, model adaptation, DVFS, migration |
+| **Objectives (G)** | What is optimized? | Latency, deadline satisfaction, throughput, utilization, energy, data movement, accuracy, predictability |
+| **Granularity (Γ)** | At what boundary does control occur? | Application, request, model, batch, stage, subgraph, layer, operator, kernel, tensor segment, cache page |
+| **Policy (Π)** | How is an action selected? | Rule or priority, optimization, control-theoretic, profile-guided, supervised learning, reinforcement learning |
 
 ### Classification Notes
 
 - **Deadline-aware** and **real-time guaranteed** are not treated as equivalent. The former uses deadlines as scheduling signals; the latter requires an analytical or enforced timing guarantee.
 - A learned latency or energy predictor does not automatically make a scheduler learning-driven. Such systems are labeled as **learning-assisted heuristic** or **learning-assisted optimization** when the final decision is produced by search or optimization.
 - Hardware and platform labels are separated conceptually: for example, a mobile SoC may contain CPU, GPU, DSP, and NPU resources.
+- **Orchestration action (O)** is kept separate from **objective (G)**: for example, swapping, batching, or DVFS is an action, while latency, energy, or predictability is the quantity optimized.
 - A paper may appear in multiple sections when it contributes to more than one mechanism or tradeoff.
 
 ## Table Schema
 
-Detailed tables use the following fields:
+Detailed classification tables use the following fields. Tradeoff and future-direction tables may use a smaller comparison-oriented subset, but the canonical labels remain the same seven dimensions.
 
 | Field | Description |
 |---|---|
 | **Title** | Paper or system name with publication link |
 | **Author / Venue / Year** | Compact bibliographic metadata |
 | **Core Mechanism / Contribution** | One-sentence summary of the runtime contribution |
-| **Workload** | Static, Dynamic, Pipeline, or Generative |
-| **Hardware** | Main processing platform(s) |
-| **Objectives / Constraints** | Optimized metrics and enforced limits |
-| **Resources** | Compute, memory, accelerator, power, or multiple resources |
-| **Granularity** | Runtime control unit |
-| **Decision Policy** | Heuristic, optimization, control, or learning-based method |
+| **Workload (W)** | Static, dynamic, pipeline-oriented, or generative workload |
+| **Hardware (H)** | Main processing platform(s) and resource substrate |
+| **Constraints (C)** | Mandatory requirements such as deadline, memory, energy, thermal, accuracy, or predictability limits |
+| **Orchestration Action (O)** | Runtime action exposed by the system, such as dispatching, partitioning, placement, swapping, batching, DVFS, or model adaptation |
+| **Objectives (G)** | Metrics optimized after constraints are applied |
+| **Granularity (Γ)** | Runtime control unit |
+| **Decision Policy (Π)** | Rule/priority, optimization, control, profile-guided, or learning-driven method |
 | **Artifact** | Public code, dataset, project page, or reproducibility package |
 
 ## 3. Resource Orchestration Mechanisms
 
 Resource orchestration determines how runtime resources are allocated, shared, and reconfigured. The following groups distinguish the managed resource from the decision policy used to manage it.
 
-### 3.1 Compute Resource Orchestration
+### 3.1 Compute Execution Orchestration
 
 Compute orchestration controls when and where inference units execute. Existing systems progressively move from stage- and layer-level scheduling toward preemptible operators, elastic kernels, adaptive models, and spatio-temporal GPU allocation.
 
 <details>
 <summary><b>Representative systems</b></summary>
 
-| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload | Hardware | Objectives / Constraints | Granularity | Decision Policy | Artifact |
-|---|---|---|---|---|---|---|---|:---:|
-| [DUET: A Compiler-Runtime Subgraph Scheduling Approach for Tensor Programs on a Coupled CPU-GPU Architecture](https://ieeexplore.ieee.org/abstract/document/9460468) | Zhang et al., IPDPS 2021 | Decomposes tensor programs into schedulable subgraphs and coordinates their execution on a coupled CPU–GPU architecture. | Static | CPU+GPU | Latency / timing constraints | Stage / subgraph | Heuristic | - |
-| [Real-Time Multitasking of Deep Neural Networks with NVIDIA TensorRT](https://ieeexplore.ieee.org/abstract/document/11315110) | Aromolo et al., RTSS 2025 | Partitions long inference jobs into chunks that expose preemption points and reduce blocking. | Static | CPU+GPU | Latency, predictability / deadlines | Chunk | Heuristic | - |
-| [Pantheon: Preemptible Multi-DNN Inference on Mobile Edge GPUs](https://dl.acm.org/doi/abs/10.1145/3643832.3661878) | Han et al., MobiSys 2024 | Controls GPU execution at operator granularity and schedules segments according to runtime urgency under multi-DNN contention. | Static multi-DNN | GPU | Latency, accuracy / deadlines | Operator / segment | Heuristic | [Artifact](https://zenodo.org/records/11094058) |
-| [DynaMIX: Resource Optimization for DNN-Based Real-Time Applications on a Multitasking System](https://arxiv.org/abs/2302.01568) | Cho et al., arXiv 2023 | Adapts numerical precision at runtime to reduce computation and respond to changing resource availability. | Static | CPU | Latency, accuracy / deadline, memory | Layer / model configuration | Optimization | - |
-| [DREAM: A Dynamic Scheduler for Dynamic Real-Time Multi-Model ML Workloads](https://dl.acm.org/doi/abs/10.1145/3623278.3624753) | Kim et al., ASPLOS 2023 | Combines admission control and adaptive model selection to reduce deadline violations during overload. | Dynamic multi-model | NPU | Latency, energy / deadline, energy budget | Model | Heuristic | - |
-| [DNN-SAM: Split-and-Merge DNN Execution for Real-Time Object Detection](https://ieeexplore.ieee.org/abstract/document/9804671) | Kang et al., RTAS 2022 | Separates mandatory and optional computation so that essential inference completes within its timing requirement. | Static | GPU | Latency, accuracy / deadlines | Model segment | Heuristic | - |
-| [CF-DETR: Coarse-to-Fine Transformer for Real-Time Object Detection](https://ieeexplore.ieee.org/abstract/document/11315056) | Shin et al., RTSS 2025 | Adjusts coarse-to-fine computation according to runtime slack. | Dynamic | GPU+NPU | Latency, accuracy / deadlines | Model stage | Heuristic | - |
+| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload (W) | Hardware (H) | Constraints (C) | Orchestration Action (O) | Objectives (G) | Granularity (Γ) | Decision Policy (Π) | Artifact |
+|---|---|---|---|---|---|---|---|---|---|:---:|
+| [DUET: A Compiler-Runtime Subgraph Scheduling Approach for Tensor Programs on a Coupled CPU-GPU Architecture](https://ieeexplore.ieee.org/abstract/document/9460468) | Zhang et al., IPDPS 2021 | Decomposes tensor programs into schedulable subgraphs and coordinates their execution on a coupled CPU–GPU architecture. | Static | CPU+GPU | timing constraints | Subgraph partitioning and CPU-GPU dispatch | Latency | Stage / subgraph | Heuristic | - |
+| [Real-Time Multitasking of Deep Neural Networks with NVIDIA TensorRT](https://ieeexplore.ieee.org/abstract/document/11315110) | Aromolo et al., RTSS 2025 | Partitions long inference jobs into chunks that expose preemption points and reduce blocking. | Static | CPU+GPU | deadlines | TensorRT chunking and limited preemption | Latency, predictability | Chunk | Heuristic | - |
+| [Pantheon: Preemptible Multi-DNN Inference on Mobile Edge GPUs](https://dl.acm.org/doi/abs/10.1145/3643832.3661878) | Han et al., MobiSys 2024 | Controls GPU execution at operator granularity and schedules segments according to runtime urgency under multi-DNN contention. | Static multi-DNN | GPU | deadlines | Operator/segment preemption | Latency, accuracy | Operator / segment | Heuristic | [Artifact](https://zenodo.org/records/11094058) |
+| [DynaMIX: Resource Optimization for DNN-Based Real-Time Applications on a Multitasking System](https://arxiv.org/abs/2302.01568) | Cho et al., arXiv 2023 | Adapts numerical precision at runtime to reduce computation and respond to changing resource availability. | Static | CPU | deadline, memory | Precision and model-configuration adaptation | Latency, accuracy | Layer / model configuration | Optimization | - |
+| [DREAM: A Dynamic Scheduler for Dynamic Real-Time Multi-Model ML Workloads](https://dl.acm.org/doi/abs/10.1145/3623278.3624753) | Kim et al., ASPLOS 2023 | Combines admission control and adaptive model selection to reduce deadline violations during overload. | Dynamic multi-model | NPU | deadline, energy budget | Admission control and adaptive model selection | Latency, energy | Model | Heuristic | - |
+| [DNN-SAM: Split-and-Merge DNN Execution for Real-Time Object Detection](https://ieeexplore.ieee.org/abstract/document/9804671) | Kang et al., RTAS 2022 | Separates mandatory and optional computation so that essential inference completes within its timing requirement. | Static | GPU | deadlines | Split-and-merge execution | Latency, accuracy | Model segment | Heuristic | - |
+| [CF-DETR: Coarse-to-Fine Transformer for Real-Time Object Detection](https://ieeexplore.ieee.org/abstract/document/11315056) | Shin et al., RTSS 2025 | Adjusts coarse-to-fine computation according to runtime slack. | Dynamic | GPU+NPU | deadlines | Coarse-to-fine stage adaptation | Latency, accuracy | Model stage | Heuristic | - |
 
 </details>
 
@@ -158,19 +161,19 @@ Memory orchestration evolves from static buffer planning and patch execution to 
 <details>
 <summary><b>Representative systems</b></summary>
 
-| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload | Hardware | Objectives / Constraints | Granularity | Decision Policy | Artifact |
-|---|---|---|---|---|---|---|---|:---:|
-| [MCUNet: Tiny Deep Learning on IoT Devices](https://proceedings.neurips.cc/paper/2020/hash/86c51678350f656dcc7f490a43946ee5-Abstract.html) | Lin et al., NeurIPS 2020 | Co-designs TinyNAS and TinyEngine with globally planned buffers for MCU-scale inference. | Static | MCU / CPU | Latency, accuracy / SRAM capacity | Model / buffer | Optimization | [Code](https://github.com/mit-han-lab/mcunet) |
-| [Memory-Efficient Patch-Based Inference for Tiny Deep Learning](https://proceedings.neurips.cc/paper_files/paper/2021/hash/1371bccec2447b5aa6d96d2a540fb401-Abstract.html) | Lin et al., NeurIPS 2021 | Processes small spatial regions sequentially to reduce peak activation memory. | Static | MCU / CPU | Latency, accuracy / SRAM capacity | Patch / layer | Optimization | - |
-| [StreamNet: Memory-Efficient Streaming Tiny Deep Learning Inference on the Microcontroller](https://proceedings.neurips.cc/paper_files/paper/2023/hash/7526508f11bbe0a123af62b9dab1fbe1-Abstract-Conference.html) | Zheng et al., NeurIPS 2023 | Uses streaming buffers and execution-aware reuse to avoid redundant patch computation. | Static | MCU / CPU | Latency, memory / SRAM capacity | Layer / stream buffer | Optimization | - |
-| [FlexNN: Efficient and Adaptive DNN Inference on Memory-Constrained Edge Devices](https://dl.acm.org/doi/abs/10.1145/3636534.3649391) | Li et al., MobiCom 2024 | Jointly coordinates tensor partitioning, loading, and execution according to available memory. | Static | CPU | Latency, memory / capacity | Tensor / layer | Optimization | [Code](https://github.com/xxxxyu/FlexNN) |
-| [vMCU: Coordinated Memory Management and Kernel Optimization for DNN Inference on MCUs](https://proceedings.mlsys.org/paper_files/paper/2024/hash/d5a655b8b373737b4f2aea8f78e5e754-Abstract-Conference.html) | Zheng et al., MLSys 2024 | Virtualizes on-chip memory and coordinates allocation with kernel execution. | Static | MCU / CPU | Energy, memory / SRAM capacity | Kernel / memory block | Hybrid heuristic and optimization | - |
-| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://proceedings.neurips.cc/paper_files/paper/2022/hash/67d57c32e20fd0a7a302cb81d36e40d5-Abstract-Conference.html) | Dao et al., NeurIPS 2022 | Uses IO-aware tiling to reduce data movement between high-bandwidth and on-chip memory. | Static / generative | GPU | Latency, memory / bandwidth | Operator / tile | Algorithmic optimization | [Code](https://github.com/Dao-AILab/flash-attention) |
-| [HeteGen: Efficient Heterogeneous Parallel Inference for Large Language Models on Resource-Constrained Devices](https://proceedings.mlsys.org/paper_files/paper/2024/hash/5431dca75a8d2abc1fb51e89e8324f10-Abstract-Conference.html) | Zhao et al., MLSys 2024 | Coordinates computation and memory placement across CPUs and GPUs for LLM inference. | Generative | CPU+GPU | Latency / memory capacity | Layer / tensor | Optimization | - |
-| [Peak-Memory-Aware Partitioning and Scheduling for Multi-Tenant DNN Model Inference](https://www.sciencedirect.com/science/article/abs/pii/S1383762126000147) | Lee et al., JSA 2026 | Combines peak-memory-aware partitioning, a shared tensor pool, and yield-based scheduling. | Static multi-tenant | GPU | Latency / memory capacity | Layer / tensor | Heuristic | - |
-| [AWTO: A Latency-Optimized Task Offloading Scheme for LLM-Driven Agentic Workflows on Heterogeneous Edge](https://www.sciencedirect.com/science/article/abs/pii/S0167739X2600049X) | Yu et al., FGCS 2026 | Optimizes offloading decisions for heterogeneous LLM-driven agent workflows. | Generative / pipeline | Heterogeneous edge | Latency / compute, communication, memory | Task / model | Learning-based | - |
-| [Demand Layering for Real-Time DNN Inference with Minimized Memory Usage](https://ieeexplore.ieee.org/abstract/document/9984745) | Ji et al., RTSS 2022 | Activates and loads layers on demand to reduce memory while retaining schedulability. | Static | CPU+GPU | Latency, memory / deadlines, capacity | Layer | Optimization | [Code](https://github.com/aveeslab/demand-layering) |
-| [RT-Swap: Addressing GPU Memory Bottlenecks for Real-Time Multi-DNN Inference](https://www.computer.org/csdl/proceedings-article/rtas/2024/584100a373/1Y5EZtFnZ2o) | Kang et al., RTAS 2024 | Swaps inactive model states under priority control while accounting for real-time requirements. | Static multi-DNN | GPU | Latency, predictability / memory capacity | Layer / model state | Optimization | [Code](https://github.com/fredrickang/Public-RT-Swap) |
+| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload (W) | Hardware (H) | Constraints (C) | Orchestration Action (O) | Objectives (G) | Granularity (Γ) | Decision Policy (Π) | Artifact |
+|---|---|---|---|---|---|---|---|---|---|:---:|
+| [MCUNet: Tiny Deep Learning on IoT Devices](https://proceedings.neurips.cc/paper/2020/hash/86c51678350f656dcc7f490a43946ee5-Abstract.html) | Lin et al., NeurIPS 2020 | Co-designs TinyNAS and TinyEngine with globally planned buffers for MCU-scale inference. | Static | MCU / CPU | SRAM capacity | Global buffer planning | Latency, accuracy | Model / buffer | Optimization | [Code](https://github.com/mit-han-lab/mcunet) |
+| [Memory-Efficient Patch-Based Inference for Tiny Deep Learning](https://proceedings.neurips.cc/paper_files/paper/2021/hash/1371bccec2447b5aa6d96d2a540fb401-Abstract.html) | Lin et al., NeurIPS 2021 | Processes small spatial regions sequentially to reduce peak activation memory. | Static | MCU / CPU | SRAM capacity | Patch-based activation scheduling | Latency, accuracy | Patch / layer | Optimization | - |
+| [StreamNet: Memory-Efficient Streaming Tiny Deep Learning Inference on the Microcontroller](https://proceedings.neurips.cc/paper_files/paper/2023/hash/7526508f11bbe0a123af62b9dab1fbe1-Abstract-Conference.html) | Zheng et al., NeurIPS 2023 | Uses streaming buffers and execution-aware reuse to avoid redundant patch computation. | Static | MCU / CPU | SRAM capacity | Streaming buffer reuse | Latency, memory | Layer / stream buffer | Optimization | - |
+| [FlexNN: Efficient and Adaptive DNN Inference on Memory-Constrained Edge Devices](https://dl.acm.org/doi/abs/10.1145/3636534.3649391) | Li et al., MobiCom 2024 | Jointly coordinates tensor partitioning, loading, and execution according to available memory. | Static | CPU | capacity | Tensor partitioning, loading, and execution | Latency, memory | Tensor / layer | Optimization | [Code](https://github.com/xxxxyu/FlexNN) |
+| [vMCU: Coordinated Memory Management and Kernel Optimization for DNN Inference on MCUs](https://proceedings.mlsys.org/paper_files/paper/2024/hash/d5a655b8b373737b4f2aea8f78e5e754-Abstract-Conference.html) | Zheng et al., MLSys 2024 | Virtualizes on-chip memory and coordinates allocation with kernel execution. | Static | MCU / CPU | SRAM capacity | Memory virtualization and kernel allocation | Energy, memory | Kernel / memory block | Hybrid heuristic and optimization | - |
+| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://proceedings.neurips.cc/paper_files/paper/2022/hash/67d57c32e20fd0a7a302cb81d36e40d5-Abstract-Conference.html) | Dao et al., NeurIPS 2022 | Uses IO-aware tiling to reduce data movement between high-bandwidth and on-chip memory. | Static / generative | GPU | bandwidth | IO-aware attention tiling | Latency, memory | Operator / tile | Algorithmic optimization | [Code](https://github.com/Dao-AILab/flash-attention) |
+| [HeteGen: Efficient Heterogeneous Parallel Inference for Large Language Models on Resource-Constrained Devices](https://proceedings.mlsys.org/paper_files/paper/2024/hash/5431dca75a8d2abc1fb51e89e8324f10-Abstract-Conference.html) | Zhao et al., MLSys 2024 | Coordinates computation and memory placement across CPUs and GPUs for LLM inference. | Generative | CPU+GPU | memory capacity | Heterogeneous layer and tensor placement | Latency | Layer / tensor | Optimization | - |
+| [Peak-Memory-Aware Partitioning and Scheduling for Multi-Tenant DNN Model Inference](https://www.sciencedirect.com/science/article/abs/pii/S1383762126000147) | Lee et al., JSA 2026 | Combines peak-memory-aware partitioning, a shared tensor pool, and yield-based scheduling. | Static multi-tenant | GPU | memory capacity | Peak-memory-aware partitioning and tensor pooling | Latency | Layer / tensor | Heuristic | - |
+| [AWTO: A Latency-Optimized Task Offloading Scheme for LLM-Driven Agentic Workflows on Heterogeneous Edge](https://www.sciencedirect.com/science/article/abs/pii/S0167739X2600049X) | Yu et al., FGCS 2026 | Optimizes offloading decisions for heterogeneous LLM-driven agent workflows. | Generative / pipeline | Heterogeneous edge | compute, communication, memory | Task offloading for agentic workflows | Latency | Task / model | Learning-based | - |
+| [Demand Layering for Real-Time DNN Inference with Minimized Memory Usage](https://ieeexplore.ieee.org/abstract/document/9984745) | Ji et al., RTSS 2022 | Activates and loads layers on demand to reduce memory while retaining schedulability. | Static | CPU+GPU | deadlines, capacity | Demand-driven layer loading | Latency, memory | Layer | Optimization | [Code](https://github.com/aveeslab/demand-layering) |
+| [RT-Swap: Addressing GPU Memory Bottlenecks for Real-Time Multi-DNN Inference](https://www.computer.org/csdl/proceedings-article/rtas/2024/584100a373/1Y5EZtFnZ2o) | Kang et al., RTAS 2024 | Swaps inactive model states under priority control while accounting for real-time requirements. | Static multi-DNN | GPU | memory capacity | Priority-aware model-state swapping | Latency, predictability | Layer / model state | Optimization | [Code](https://github.com/fredrickang/Public-RT-Swap) |
 
 </details>
 
@@ -181,47 +184,47 @@ Accelerator orchestration coordinates heterogeneous execution engines. The main 
 <details>
 <summary><b>Representative systems</b></summary>
 
-| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload | Hardware | Objectives / Constraints | Granularity | Decision Policy | Artifact |
-|---|---|---|---|---|---|---|---|:---:|
-| [CoDL: Efficient CPU-GPU Co-Execution for Deep Learning Inference on Mobile Devices](https://www.microsoft.com/en-us/research/wp-content/uploads/2022/05/mobisys22-CoDL__Efficient_CPU_GPU_Co_execution_for_DL_Model_Inference_on_Mobile_Devices-4.pdf) | Jia et al., MobiSys 2022 | Enables operator-level CPU–GPU co-execution using concurrency-aware latency prediction and data-sharing control. | Static | CPU+GPU | Latency, energy | Operator | Learning-assisted heuristic | [Code](https://github.com/csu-eis/CoDL) |
-| [BAND: Coordinated Multi-DNN Inference on Heterogeneous Mobile Processors](https://dl.acm.org/doi/abs/10.1145/3498361.3538948) | Jeong et al., MobiSys 2022 | Schedules dependency-aware subgraphs across CPU, GPU, DSP, and NPU resources. | Dynamic multi-DNN | CPU+GPU+DSP+NPU | Latency, throughput / deadlines | Subgraph | Heuristic | [Code](https://github.com/mrsnu/band) |
-| [BlastNet: Exploiting Duo-Blocks for Cross-Processor Real-Time DNN Inference](https://dl.acm.org/doi/abs/10.1145/3560905.3568520) | Ling et al., SenSys 2022 | Groups CPU and GPU execution into analyzable duo-blocks for cross-processor real-time inference. | Static | CPU+GPU | Latency, accuracy / deadlines | Block / layer | Heuristic | - |
-| [Time-Sensitive Multi-DNN Inference on CPU-GPU Edge Platforms](https://ieeexplore.ieee.org/abstract/document/11268909) | Ling et al., IEEE TMC 2026 | Uses duo-block structures and urgency-driven CPU–GPU scheduling for time-sensitive multi-DNN inference. | Static multi-DNN | CPU+GPU | Latency, accuracy / deadlines, memory | Block / layer | Heuristic | - |
-| [NN-Stretch: Automatic Neural Network Branching for Parallel Inference on Heterogeneous Multi-Processors](https://dl.acm.org/doi/abs/10.1145/3581791.3596870) | Wei et al., MobiSys 2023 | Reshapes sequential networks into branches for parallel execution across CPU, GPU, and DSP resources. | Static | CPU+GPU+DSP | Latency, energy, accuracy | Branch / layer | Optimization | [Code](https://github.com/caoting-dotcom/multiBranchModel) |
-| [CARIn: Constraint-Aware and Responsive Inference on Heterogeneous Devices for Single- and Multi-DNN Workloads](https://dl.acm.org/doi/full/10.1145/3665868) | Panopoulos et al., ACM TECS 2024 | Selects model–processor configurations under SLO and resource constraints and switches configurations at runtime. | Static / multi-DNN | CPU+GPU+NPU | Latency, throughput, accuracy / deadline, memory | Model configuration | Heuristic | - |
-| [Klotski: DNN Model Orchestration Framework for Dataflow Architecture Accelerators](https://ieeexplore.ieee.org/abstract/document/10323893) | Bai et al., ICCAD 2023 | Orchestrates micro-operations on dataflow accelerators while decoupling scheduling from mapping. | Static | Dataflow accelerator / NPU | Makespan, NoC overhead | Micro-operation | Optimization | - |
-| [XSched: Preemptive Scheduling for Diverse XPUs](https://www.usenix.org/conference/osdi25/presentation/shen-weihang) | Shen et al., OSDI 2025 | Provides a preemptible command-queue abstraction and portable priority and bandwidth policies across diverse XPUs. | Static / multi-tenant | GPU+NPU+ASIC+FPGA | Latency, throughput / deadlines | Command queue | Heuristic | [Code](https://github.com/XpuOS/xsched) |
-| [Fast On-Device LLM Inference with NPUs](https://dl.acm.org/doi/abs/10.1145/3669940.3707239) | Xu et al., ASPLOS 2025 | Offloads suitable prefill computation to NPUs while retaining unsupported or accuracy-sensitive operations on CPU/GPU. | Generative | CPU+GPU+NPU | Latency, energy / memory capacity | Layer / operator | Heuristic | [Code](https://github.com/QingweiJi/PowerNPU) |
-| [ARIA: Optimizing Vision Foundation Model Inference on Heterogeneous Mobile Processors for Augmented Reality](https://lovelyzzkei.github.io/assets/pdf/mobisys25-aria.pdf) | Jung et al., MobiSys 2025 | Coordinates GPU-based high-fidelity prediction with NPU-based low-latency updates for AR workloads. | Dynamic | CPU+GPU+NPU | Accuracy / latency | Model / stage | Heuristic | - |
-| [Time-Predictable Acceleration of Deep Neural Networks on FPGA-SoC Platforms](https://ieeexplore.ieee.org/abstract/document/9622368) | Restuccia et al., RTSS 2021 | Designs time-predictable FPGA-SoC acceleration to reduce execution variability for schedulability analysis. | Static | CPU+FPGA | Latency, predictability | Layer | Optimization | - |
-| [MIRIAM: Exploiting Elastic Kernels for Real-Time Multi-DNN Inference on Edge GPUs](https://dl.acm.org/doi/abs/10.1145/3625687.3625789) | Zhao et al., SenSys 2023 | Uses elastic kernels to reallocate GPU resources during execution instead of relying on static reservations. | Static multi-DNN | CPU+GPU | Latency, throughput / deadlines | Kernel | Heuristic | - |
-| [ODMDEF: On-Device Multi-DNN Execution Framework Utilizing Adaptive Layer Allocation on General-Purpose Cores and Accelerators](https://ieeexplore.ieee.org/abstract/document/9453793) | Lim et al., IEEE Access 2021 | Uses latency prediction to guide layer-level co-execution across general-purpose cores and accelerators. | Static multi-DNN | CPU+GPU+NPU | Latency | Layer | Learning-assisted heuristic | - |
-| [AxoNN: Energy-Aware Execution of Neural Network Inference on Multi-Accelerator Heterogeneous SoCs](https://dl.acm.org/doi/abs/10.1145/3489517.3530572) | Dagli et al., DAC 2022 | Optimizes inference mapping across heterogeneous accelerators under latency and energy considerations. | Static | CPU+GPU+NPU | Latency, energy | Layer / subgraph | Optimization | - |
-| [Shared-Memory-Contention-Aware Concurrent DNN Execution for Diversely Heterogeneous Systems-on-Chip](https://dl.acm.org/doi/abs/10.1145/3627535.3638502) | Dagli et al., PPoPP 2024 | Incorporates shared-memory contention into concurrent DNN mapping on heterogeneous SoCs. | Static multi-DNN | CPU+GPU+NPU | Latency, throughput, memory | Layer / subgraph | Optimization | [Code](https://github.com/ismetdagli/HaX-CoNN) |
-| [GCAPS: GPU Context-Aware Preemptive Priority-Based Scheduling for Real-Time Tasks](https://arxiv.org/abs/2406.05221) | Wang et al., arXiv 2024 | Introduces driver-level preemptive GPU scheduling to improve the schedulability of latency-sensitive tasks. | Static | CPU+GPU | Latency, predictability / deadlines | Kernel / command | Heuristic | - |
-| [DARIS: An Oversubscribed Spatio-Temporal Scheduler for Real-Time DNN Inference on GPUs](https://ieeexplore.ieee.org/abstract/document/11132423) | Babaei et al., DAC 2025 | Uses deadline-aware spatial and temporal GPU allocation to improve utilization and throughput. | Static multi-DNN | GPU | Latency, throughput / deadlines, memory | Model / GPU partition | Heuristic | - |
+| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload (W) | Hardware (H) | Constraints (C) | Orchestration Action (O) | Objectives (G) | Granularity (Γ) | Decision Policy (Π) | Artifact |
+|---|---|---|---|---|---|---|---|---|---|:---:|
+| [CoDL: Efficient CPU-GPU Co-Execution for Deep Learning Inference on Mobile Devices](https://www.microsoft.com/en-us/research/wp-content/uploads/2022/05/mobisys22-CoDL__Efficient_CPU_GPU_Co_execution_for_DL_Model_Inference_on_Mobile_Devices-4.pdf) | Jia et al., MobiSys 2022 | Enables operator-level CPU–GPU co-execution using concurrency-aware latency prediction and data-sharing control. | Static | CPU+GPU | - | Operator-level CPU-GPU co-execution | Latency, energy | Operator | Learning-assisted heuristic | [Code](https://github.com/csu-eis/CoDL) |
+| [BAND: Coordinated Multi-DNN Inference on Heterogeneous Mobile Processors](https://dl.acm.org/doi/abs/10.1145/3498361.3538948) | Jeong et al., MobiSys 2022 | Schedules dependency-aware subgraphs across CPU, GPU, DSP, and NPU resources. | Dynamic multi-DNN | CPU+GPU+DSP+NPU | deadlines | Dependency-aware subgraph scheduling | Latency, throughput | Subgraph | Heuristic | [Code](https://github.com/mrsnu/band) |
+| [BlastNet: Exploiting Duo-Blocks for Cross-Processor Real-Time DNN Inference](https://dl.acm.org/doi/abs/10.1145/3560905.3568520) | Ling et al., SenSys 2022 | Groups CPU and GPU execution into analyzable duo-blocks for cross-processor real-time inference. | Static | CPU+GPU | deadlines | Duo-block grouping and scheduling | Latency, accuracy | Block / layer | Heuristic | - |
+| [Time-Sensitive Multi-DNN Inference on CPU-GPU Edge Platforms](https://ieeexplore.ieee.org/abstract/document/11268909) | Ling et al., IEEE TMC 2026 | Uses duo-block structures and urgency-driven CPU–GPU scheduling for time-sensitive multi-DNN inference. | Static multi-DNN | CPU+GPU | deadlines, memory | Urgency-driven duo-block scheduling | Latency, accuracy | Block / layer | Heuristic | - |
+| [NN-Stretch: Automatic Neural Network Branching for Parallel Inference on Heterogeneous Multi-Processors](https://dl.acm.org/doi/abs/10.1145/3581791.3596870) | Wei et al., MobiSys 2023 | Reshapes sequential networks into branches for parallel execution across CPU, GPU, and DSP resources. | Static | CPU+GPU+DSP | - | Network branching and parallel placement | Latency, energy, accuracy | Branch / layer | Optimization | [Code](https://github.com/caoting-dotcom/multiBranchModel) |
+| [CARIn: Constraint-Aware and Responsive Inference on Heterogeneous Devices for Single- and Multi-DNN Workloads](https://dl.acm.org/doi/full/10.1145/3665868) | Panopoulos et al., ACM TECS 2024 | Selects model–processor configurations under SLO and resource constraints and switches configurations at runtime. | Static / multi-DNN | CPU+GPU+NPU | deadline, memory | Runtime configuration selection and switching | Latency, throughput, accuracy | Model configuration | Heuristic | - |
+| [Klotski: DNN Model Orchestration Framework for Dataflow Architecture Accelerators](https://ieeexplore.ieee.org/abstract/document/10323893) | Bai et al., ICCAD 2023 | Orchestrates micro-operations on dataflow accelerators while decoupling scheduling from mapping. | Static | Dataflow accelerator / NPU | - | Micro-operation partitioning, scheduling, and mapping | Makespan, NoC overhead | Micro-operation | Optimization | - |
+| [XSched: Preemptive Scheduling for Diverse XPUs](https://www.usenix.org/conference/osdi25/presentation/shen-weihang) | Shen et al., OSDI 2025 | Provides a preemptible command-queue abstraction and portable priority and bandwidth policies across diverse XPUs. | Static / multi-tenant | GPU+NPU+ASIC+FPGA | deadlines | Preemptible command-queue scheduling | Latency, throughput | Command queue | Heuristic | [Code](https://github.com/XpuOS/xsched) |
+| [Fast On-Device LLM Inference with NPUs](https://dl.acm.org/doi/abs/10.1145/3669940.3707239) | Xu et al., ASPLOS 2025 | Offloads suitable prefill computation to NPUs while retaining unsupported or accuracy-sensitive operations on CPU/GPU. | Generative | CPU+GPU+NPU | memory capacity | NPU prefill offloading with CPU/GPU fallback | Latency, energy | Layer / operator | Heuristic | [Code](https://github.com/QingweiJi/PowerNPU) |
+| [ARIA: Optimizing Vision Foundation Model Inference on Heterogeneous Mobile Processors for Augmented Reality](https://lovelyzzkei.github.io/assets/pdf/mobisys25-aria.pdf) | Jung et al., MobiSys 2025 | Coordinates GPU-based high-fidelity prediction with NPU-based low-latency updates for AR workloads. | Dynamic | CPU+GPU+NPU | latency | GPU/NPU stage coordination | Accuracy | Model / stage | Heuristic | - |
+| [Time-Predictable Acceleration of Deep Neural Networks on FPGA-SoC Platforms](https://ieeexplore.ieee.org/abstract/document/9622368) | Restuccia et al., RTSS 2021 | Designs time-predictable FPGA-SoC acceleration to reduce execution variability for schedulability analysis. | Static | CPU+FPGA | - | Time-predictable FPGA acceleration | Latency, predictability | Layer | Optimization | - |
+| [MIRIAM: Exploiting Elastic Kernels for Real-Time Multi-DNN Inference on Edge GPUs](https://dl.acm.org/doi/abs/10.1145/3625687.3625789) | Zhao et al., SenSys 2023 | Uses elastic kernels to reallocate GPU resources during execution instead of relying on static reservations. | Static multi-DNN | CPU+GPU | deadlines | Elastic kernel resizing | Latency, throughput | Kernel | Heuristic | - |
+| [ODMDEF: On-Device Multi-DNN Execution Framework Utilizing Adaptive Layer Allocation on General-Purpose Cores and Accelerators](https://ieeexplore.ieee.org/abstract/document/9453793) | Lim et al., IEEE Access 2021 | Uses latency prediction to guide layer-level co-execution across general-purpose cores and accelerators. | Static multi-DNN | CPU+GPU+NPU | - | Adaptive layer allocation | Latency | Layer | Learning-assisted heuristic | - |
+| [AxoNN: Energy-Aware Execution of Neural Network Inference on Multi-Accelerator Heterogeneous SoCs](https://dl.acm.org/doi/abs/10.1145/3489517.3530572) | Dagli et al., DAC 2022 | Optimizes inference mapping across heterogeneous accelerators under latency and energy considerations. | Static | CPU+GPU+NPU | - | Energy-aware accelerator mapping | Latency, energy | Layer / subgraph | Optimization | - |
+| [Shared-Memory-Contention-Aware Concurrent DNN Execution for Diversely Heterogeneous Systems-on-Chip](https://dl.acm.org/doi/abs/10.1145/3627535.3638502) | Dagli et al., PPoPP 2024 | Incorporates shared-memory contention into concurrent DNN mapping on heterogeneous SoCs. | Static multi-DNN | CPU+GPU+NPU | - | Contention-aware concurrent mapping | Latency, throughput, memory | Layer / subgraph | Optimization | [Code](https://github.com/ismetdagli/HaX-CoNN) |
+| [GCAPS: GPU Context-Aware Preemptive Priority-Based Scheduling for Real-Time Tasks](https://arxiv.org/abs/2406.05221) | Wang et al., arXiv 2024 | Introduces driver-level preemptive GPU scheduling to improve the schedulability of latency-sensitive tasks. | Static | CPU+GPU | deadlines | Driver-level GPU preemptive scheduling | Latency, predictability | Kernel / command | Heuristic | - |
+| [DARIS: An Oversubscribed Spatio-Temporal Scheduler for Real-Time DNN Inference on GPUs](https://ieeexplore.ieee.org/abstract/document/11132423) | Babaei et al., DAC 2025 | Uses deadline-aware spatial and temporal GPU allocation to improve utilization and throughput. | Static multi-DNN | GPU | deadlines, memory | Spatio-temporal GPU allocation | Latency, throughput | Model / GPU partition | Heuristic | - |
 
 </details>
 
-### 3.4 Power and Thermal Orchestration
+### 3.4 Processor-Frequency and Energy Orchestration
 
-Power and thermal orchestration treats frequency, batching, model configuration, and accelerator selection as coupled runtime controls. The objective is not merely to minimize energy, but to prevent thermal throttling and preserve timing behavior under sustained workloads.
+Processor-frequency and energy orchestration treats DVFS, batching, model configuration, and accelerator selection as coupled runtime controls. The objective is not merely to minimize energy, but to prevent thermal throttling and preserve timing behavior under sustained workloads.
 
 <details>
 <summary><b>Representative systems</b></summary>
 
-| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload | Hardware | Objectives / Constraints | Granularity | Decision Policy | Artifact |
-|---|---|---|---|---|---|---|---|:---:|
-| [zTT: Learning-Based DVFS with Zero Thermal Throttling for Mobile Devices](https://dl.acm.org/doi/abs/10.1145/3529706.3529714) | Kim et al., GetMobile 2022 | Learns thermal-aware DVFS decisions intended to avoid throttling during sustained mobile workloads. | Static | CPU+GPU | Latency, energy / thermal limit | Model / control interval | Learning-based | [Code](https://github.com/ztt-21/zTT) |
-| [Coordinated Batching and DVFS for DNN Inference on GPU Accelerators](https://ieeexplore.ieee.org/abstract/document/9689937) | Nabavinejad et al., IEEE TPDS 2022 | Jointly adjusts batch size and GPU frequency for energy-efficient inference. | Static | GPU | Throughput, energy / latency SLO | Batch | Heuristic | - |
-| [A Workload-Aware DVFS Robust to Concurrent Tasks for Mobile Devices](https://dl.acm.org/doi/abs/10.1145/3570361.3592524) | Lin et al., MobiCom 2023 | Selects frequencies using workload characteristics to stabilize latency and energy under concurrent execution. | Dynamic | CPU+GPU | Latency, energy | Control interval | Control / profile-guided | [Code](https://github.com/geardvfs/GearDVFS) |
-| [MOC: Multi-Objective Mobile CPU-GPU Co-Optimization for Power-Efficient DNN Inference](https://ieeexplore.ieee.org/abstract/document/10323882) | Wu et al., ICCAD 2023 | Jointly manages CPU–GPU configurations over latency, energy, and accuracy objectives. | Static | CPU+GPU | Latency, energy, accuracy | Model configuration | Learning-assisted optimization | - |
-| [Thermal-Aware Scheduling for Deep Learning on Mobile Devices with NPU](https://ieeexplore.ieee.org/abstract/document/10478860) | Tan et al., IEEE TMC 2024 | Incorporates thermal state into scheduling across mobile processors and NPUs. | Static | GPU+NPU | Latency, accuracy / thermal limit | Model | Learning-assisted heuristic | - |
-| [MapFormer: Attention-Based Multi-DNN Manager for Throughput and Power Co-Optimization on Embedded Devices](https://dl.acm.org/doi/abs/10.1145/3676536.3676724) | Karatzas et al., ICCAD 2024 | Combines a transformer-based predictor with search to partition concurrent DNNs and optimize allocation and power. | Static multi-DNN | GPU+NPU | Throughput / power budget | Layer / partition | Learning-assisted heuristic | - |
-| [Tango: Low-Latency Multi-DNN Inference on Heterogeneous Edge Platforms](https://ieeexplore.ieee.org/abstract/document/10817997) | Taufique et al., ICCD 2024 | Uses a PPO agent to select compute clusters, accuracy configurations, and DVFS settings. | Dynamic multi-DNN | CPU+GPU | Latency, energy / deadlines | Model configuration | Reinforcement learning | - |
-| [NeuroBalancer: Balancing System Frequencies with Punctual Laziness for Timely and Energy-Efficient DNN Inferences](https://ieeexplore.ieee.org/abstract/document/10819653) | Bin et al., IEEE TMC 2025 | Coordinates CPU, GPU, and memory frequencies to exploit timing slack while preserving punctual execution. | Static | CPU+GPU | Latency, energy / deadlines | System / control interval | Optimization | - |
-| [E4: Energy-Efficient DNN Inference for Edge Video Analytics via Early Exiting and DVFS](https://ojs.aaai.org/index.php/AAAI/article/view/32104) | Zhang et al., AAAI 2025 | Couples early exits with DVFS so computation follows input difficulty and energy availability. | Dynamic | CPU+GPU | Latency, energy / accuracy | Exit / layer | Optimization | - |
-| [Twill: Scheduling Compound AI Systems on Heterogeneous Mobile Edge Platforms](https://ieeexplore.ieee.org/abstract/document/11240767) | Taufique et al., ICCAD 2025 | Uses affinity-aware mapping, priority-driven freezing and unfreezing, and adaptive DVFS for compound AI pipelines. | Pipeline | CPU+GPU+NPU | Latency / energy budget | Stage / layer | Heuristic | - |
+| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload (W) | Hardware (H) | Constraints (C) | Orchestration Action (O) | Objectives (G) | Granularity (Γ) | Decision Policy (Π) | Artifact |
+|---|---|---|---|---|---|---|---|---|---|:---:|
+| [zTT: Learning-Based DVFS with Zero Thermal Throttling for Mobile Devices](https://dl.acm.org/doi/abs/10.1145/3529706.3529714) | Kim et al., GetMobile 2022 | Learns thermal-aware DVFS decisions intended to avoid throttling during sustained mobile workloads. | Static | CPU+GPU | thermal limit | Learning-based DVFS | Latency, energy | Model / control interval | Learning-based | [Code](https://github.com/ztt-21/zTT) |
+| [Coordinated Batching and DVFS for DNN Inference on GPU Accelerators](https://ieeexplore.ieee.org/abstract/document/9689937) | Nabavinejad et al., IEEE TPDS 2022 | Jointly adjusts batch size and GPU frequency for energy-efficient inference. | Static | GPU | latency SLO | Batch-size and GPU-frequency control | Throughput, energy | Batch | Heuristic | - |
+| [A Workload-Aware DVFS Robust to Concurrent Tasks for Mobile Devices](https://dl.acm.org/doi/abs/10.1145/3570361.3592524) | Lin et al., MobiCom 2023 | Selects frequencies using workload characteristics to stabilize latency and energy under concurrent execution. | Dynamic | CPU+GPU | - | Workload-aware frequency selection | Latency, energy | Control interval | Control / profile-guided | [Code](https://github.com/geardvfs/GearDVFS) |
+| [MOC: Multi-Objective Mobile CPU-GPU Co-Optimization for Power-Efficient DNN Inference](https://ieeexplore.ieee.org/abstract/document/10323882) | Wu et al., ICCAD 2023 | Jointly manages CPU–GPU configurations over latency, energy, and accuracy objectives. | Static | CPU+GPU | - | CPU-GPU configuration and frequency tuning | Latency, energy, accuracy | Model configuration | Learning-assisted optimization | - |
+| [Thermal-Aware Scheduling for Deep Learning on Mobile Devices with NPU](https://ieeexplore.ieee.org/abstract/document/10478860) | Tan et al., IEEE TMC 2024 | Incorporates thermal state into scheduling across mobile processors and NPUs. | Static | GPU+NPU | thermal limit | Thermal-aware processor selection | Latency, accuracy | Model | Learning-assisted heuristic | - |
+| [MapFormer: Attention-Based Multi-DNN Manager for Throughput and Power Co-Optimization on Embedded Devices](https://dl.acm.org/doi/abs/10.1145/3676536.3676724) | Karatzas et al., ICCAD 2024 | Combines a transformer-based predictor with search to partition concurrent DNNs and optimize allocation and power. | Static multi-DNN | GPU+NPU | power budget | DNN partitioning, allocation, and power control | Throughput | Layer / partition | Learning-assisted heuristic | - |
+| [Tango: Low-Latency Multi-DNN Inference on Heterogeneous Edge Platforms](https://ieeexplore.ieee.org/abstract/document/10817997) | Taufique et al., ICCD 2024 | Uses a PPO agent to select compute clusters, accuracy configurations, and DVFS settings. | Dynamic multi-DNN | CPU+GPU | deadlines | Cluster selection, accuracy configuration, and DVFS | Latency, energy | Model configuration | Reinforcement learning | - |
+| [NeuroBalancer: Balancing System Frequencies with Punctual Laziness for Timely and Energy-Efficient DNN Inferences](https://ieeexplore.ieee.org/abstract/document/10819653) | Bin et al., IEEE TMC 2025 | Coordinates CPU, GPU, and memory frequencies to exploit timing slack while preserving punctual execution. | Static | CPU+GPU | deadlines | CPU/GPU/memory frequency coordination | Latency, energy | System / control interval | Optimization | - |
+| [E4: Energy-Efficient DNN Inference for Edge Video Analytics via Early Exiting and DVFS](https://ojs.aaai.org/index.php/AAAI/article/view/32104) | Zhang et al., AAAI 2025 | Couples early exits with DVFS so computation follows input difficulty and energy availability. | Dynamic | CPU+GPU | accuracy | Early-exit and DVFS coupling | Latency, energy | Exit / layer | Optimization | - |
+| [Twill: Scheduling Compound AI Systems on Heterogeneous Mobile Edge Platforms](https://ieeexplore.ieee.org/abstract/document/11240767) | Taufique et al., ICCAD 2025 | Uses affinity-aware mapping, priority-driven freezing and unfreezing, and adaptive DVFS for compound AI pipelines. | Pipeline | CPU+GPU+NPU | energy budget | Affinity mapping, task freezing, migration, and DVFS | Latency | Stage / layer | Heuristic | - |
 
 </details>
 
@@ -236,19 +239,19 @@ Rule- and priority-driven systems use explicit urgency, priority, slack, affinit
 <details>
 <summary><b>Representative systems</b></summary>
 
-| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload | Hardware | Objectives / Constraints | Granularity | Decision Policy | Artifact |
-|---|---|---|---|---|---|---|---|:---:|
-| [LaLaRAND: Flexible Layer-by-Layer CPU/GPU Scheduling for Real-Time DNN Tasks](https://ieeexplore.ieee.org/abstract/document/9622325) | Kang et al., RTSS 2021 | Assigns priorities and processors at layer granularity while preserving analyzable timing behavior. | Static | CPU+GPU | Latency, predictability / deadlines | Layer | Priority heuristic | [Code](https://github.com/fredrickang/LaLaRAND) |
-| [RT-LM: Uncertainty-Aware Resource Management for Real-Time Inference of Language Models](https://arxiv.org/abs/2309.06619) | Li et al., RTSS 2023 | Accounts for execution uncertainty when allocating resources to language-model inference. | Generative | GPU | Latency / deadlines | Model / request | Uncertainty-aware heuristic | - |
-| [Partitioned Scheduling and Parallelism Assignment for Real-Time DNN Inference Tasks on Multi-TPU](https://dl.acm.org/doi/abs/10.1145/3649329.3655979) | Sun et al., DAC 2024 | Jointly selects task partitions and TPU-level parallelism under deadline constraints. | Pipeline | TPU / NPU | Latency, predictability / deadlines | Layer / partition | Heuristic | - |
-| [FLASH: Deadline-Aware Flexible LLC Arbitration and Scheduling for Hardware Accelerators](https://dl.acm.org/doi/full/10.1145/3757742) | Agarwal et al., ACM TECS 2025 | Arbitrates last-level-cache access among accelerators according to deadline urgency. | Static | CPU+GPU+NPU | Latency, throughput / deadlines | Request / cache allocation | Priority heuristic | - |
-| [SGPRS: Seamless GPU Partitioning Real-Time Scheduler for Periodic Deep Learning Workloads](https://ieeexplore.ieee.org/abstract/document/10546669) | Babaei et al., 2024 | Selects GPU partitions to improve schedulability and limit cross-task interference. | Static periodic | GPU | Latency, throughput, predictability | GPU partition | Heuristic | - |
-| [TensorRT-Based Framework and Optimization Methodology for Deep Learning Inference on Jetson Boards](https://dl.acm.org/doi/full/10.1145/3508391) | Jeong et al., ACM TECS 2022 | Explores precision, engine, and deployment configurations for Jetson inference. | Static | CPU+GPU+NPU | Throughput / latency | Layer / engine configuration | Profile-guided heuristic | [Code](https://github.com/cap-lab/jedi) |
-| [IceEdge: Thermal-Aware Machine Learning Inference Serving for Emerging Edge Applications](https://dl.acm.org/doi/full/10.1145/3801093) | Shafi et al., ACM TOSN 2026 | Adapts inference-serving decisions according to observed thermal state. | Dynamic | CPU+GPU+NPU | Latency, throughput, energy / deadlines, thermal limit | Model / request | Feedback heuristic | - |
-| [TinyMem: Boosting Multi-DNN Inference on Tiny AI Accelerators with Weight-Memory Virtualization](https://dl.acm.org/doi/abs/10.1145/3708468.3711888) | Jeon et al., HotMobile 2025 | Virtualizes weight memory to improve concurrency on memory-constrained accelerators. | Static multi-DNN | NPU | Throughput / memory capacity | Layer / weight block | Heuristic | - |
-| [ARISE: High-Capacity AR Offloading Inference Serving via Proactive Scheduling](https://dl.acm.org/doi/abs/10.1145/3643832.3661894) | Kong et al., MobiSys 2024 | Predicts future inference demand and proactively provisions serving resources. | Dynamic | GPU | Throughput / accuracy SLO | Request / model | Predictive heuristic | - |
-| [AdaKnife: Flexible DNN Offloading for Inference Acceleration on Heterogeneous Mobile Devices](https://ieeexplore.ieee.org/abstract/document/10700984) | Liu et al., IEEE TMC 2025 | Uses graph-based mixed-granularity partitioning and cross-framework offloading. | Static | CPU+GPU | Latency / resource capacity | Subgraph / layer | Heuristic | - |
-| [NetCut: Real-Time DNN Inference Using Layer Removal](https://ieeexplore.ieee.org/abstract/document/9474052) | Zandigohar et al., DATE 2021 | Removes selected layers when execution approaches the deadline, trading accuracy for timely completion. | Dynamic | GPU | Accuracy / deadline | Layer | Threshold heuristic | - |
+| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload (W) | Hardware (H) | Constraints (C) | Orchestration Action (O) | Objectives (G) | Granularity (Γ) | Decision Policy (Π) | Artifact |
+|---|---|---|---|---|---|---|---|---|---|:---:|
+| [LaLaRAND: Flexible Layer-by-Layer CPU/GPU Scheduling for Real-Time DNN Tasks](https://ieeexplore.ieee.org/abstract/document/9622325) | Kang et al., RTSS 2021 | Assigns priorities and processors at layer granularity while preserving analyzable timing behavior. | Static | CPU+GPU | deadlines | Layer-level priority and processor assignment | Latency, predictability | Layer | Priority heuristic | [Code](https://github.com/fredrickang/LaLaRAND) |
+| [RT-LM: Uncertainty-Aware Resource Management for Real-Time Inference of Language Models](https://arxiv.org/abs/2309.06619) | Li et al., RTSS 2023 | Accounts for execution uncertainty when allocating resources to language-model inference. | Generative | GPU | deadlines | Uncertainty-aware model/resource selection | Latency | Model / request | Uncertainty-aware heuristic | - |
+| [Partitioned Scheduling and Parallelism Assignment for Real-Time DNN Inference Tasks on Multi-TPU](https://dl.acm.org/doi/abs/10.1145/3649329.3655979) | Sun et al., DAC 2024 | Jointly selects task partitions and TPU-level parallelism under deadline constraints. | Pipeline | TPU / NPU | deadlines | Partitioned scheduling and parallelism assignment | Latency, predictability | Layer / partition | Heuristic | - |
+| [FLASH: Deadline-Aware Flexible LLC Arbitration and Scheduling for Hardware Accelerators](https://dl.acm.org/doi/full/10.1145/3757742) | Agarwal et al., ACM TECS 2025 | Arbitrates last-level-cache access among accelerators according to deadline urgency. | Static | CPU+GPU+NPU | deadlines | Deadline-aware LLC arbitration | Latency, throughput | Request / cache allocation | Priority heuristic | - |
+| [SGPRS: Seamless GPU Partitioning Real-Time Scheduler for Periodic Deep Learning Workloads](https://ieeexplore.ieee.org/abstract/document/10546669) | Babaei et al., 2024 | Selects GPU partitions to improve schedulability and limit cross-task interference. | Static periodic | GPU | - | GPU partitioning for periodic workloads | Latency, throughput, predictability | GPU partition | Heuristic | - |
+| [TensorRT-Based Framework and Optimization Methodology for Deep Learning Inference on Jetson Boards](https://dl.acm.org/doi/full/10.1145/3508391) | Jeong et al., ACM TECS 2022 | Explores precision, engine, and deployment configurations for Jetson inference. | Static | CPU+GPU+NPU | latency | TensorRT pipeline optimization | Throughput | Layer / engine configuration | Profile-guided heuristic | [Code](https://github.com/cap-lab/jedi) |
+| [IceEdge: Thermal-Aware Machine Learning Inference Serving for Emerging Edge Applications](https://dl.acm.org/doi/full/10.1145/3801093) | Shafi et al., ACM TOSN 2026 | Adapts inference-serving decisions according to observed thermal state. | Dynamic | CPU+GPU+NPU | deadlines, thermal limit | Thermal-aware inference serving | Latency, throughput, energy | Model / request | Feedback heuristic | - |
+| [TinyMem: Boosting Multi-DNN Inference on Tiny AI Accelerators with Weight-Memory Virtualization](https://dl.acm.org/doi/abs/10.1145/3708468.3711888) | Jeon et al., HotMobile 2025 | Virtualizes weight memory to improve concurrency on memory-constrained accelerators. | Static multi-DNN | NPU | memory capacity | Weight-memory virtualization | Throughput | Layer / weight block | Heuristic | - |
+| [ARISE: High-Capacity AR Offloading Inference Serving via Proactive Scheduling](https://dl.acm.org/doi/abs/10.1145/3643832.3661894) | Kong et al., MobiSys 2024 | Predicts future inference demand and proactively provisions serving resources. | Dynamic | GPU | accuracy SLO | Proactive AR offloading scheduling | Throughput | Request / model | Predictive heuristic | - |
+| [AdaKnife: Flexible DNN Offloading for Inference Acceleration on Heterogeneous Mobile Devices](https://ieeexplore.ieee.org/abstract/document/10700984) | Liu et al., IEEE TMC 2025 | Uses graph-based mixed-granularity partitioning and cross-framework offloading. | Static | CPU+GPU | resource capacity | Flexible DNN offloading | Latency | Subgraph / layer | Heuristic | - |
+| [NetCut: Real-Time DNN Inference Using Layer Removal](https://ieeexplore.ieee.org/abstract/document/9474052) | Zandigohar et al., DATE 2021 | Removes selected layers when execution approaches the deadline, trading accuracy for timely completion. | Dynamic | GPU | deadline | Layer removal under timing pressure | Accuracy | Layer | Threshold heuristic | - |
 
 </details>
 
@@ -259,56 +262,56 @@ Optimization-based schedulers explicitly formulate placement, partitioning, reso
 <details>
 <summary><b>Representative systems</b></summary>
 
-| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload | Hardware | Objectives / Constraints | Granularity | Decision Policy | Artifact |
-|---|---|---|---|---|---|---|---|:---:|
-| [RT-mDL: Supporting Real-Time Mixed Deep Learning Tasks on Edge Platforms](https://dl.acm.org/doi/abs/10.1145/3485730.3485938) | Ling et al., SenSys 2021 | Jointly optimizes model scaling and task scheduling under storage and deadline constraints. | Static mixed tasks | CPU+GPU | Latency, accuracy / deadlines, storage | Model | Optimization | - |
-| [SPET: Transparent SRAM Allocation and Model Partitioning for Real-Time DNN Tasks on Edge TPU](https://ieeexplore.ieee.org/abstract/document/10247661) | Han et al., DAC 2023 | Jointly optimizes SRAM allocation and model partitioning on Edge TPU. | Static | TPU / NPU | Latency, predictability / SRAM capacity | Layer / memory region | Optimization | - |
-| [RT-MDM: Real-Time Scheduling Framework for Multi-DNN on MCU Using External Memory](https://dl.acm.org/doi/abs/10.1145/3649329.3655681) | Kang et al., DAC 2024 | Optimizes model segmentation and segment-group mapping to reduce external-memory accesses. | Static multi-DNN | MCU | Latency, predictability / memory capacity | Segment / layer | Optimization | - |
-| [DNN Inference Acceleration Based on Adaptive Task Partitioning and Offloading in Embedded VEC](https://dl.acm.org/doi/full/10.1145/3725734) | Li et al., ACM TECS 2025 | Optimizes task partitioning and offloading under dynamic network and resource conditions. | Dynamic | Device+edge | Latency, energy | Layer / subgraph | Optimization | - |
-| [SCENIC: Capability and Scheduling Co-Design for Intelligent Controllers on Heterogeneous Platforms](https://ieeexplore.ieee.org/abstract/document/10844810) | Chen et al., RTSS 2024 | Jointly optimizes resource allocation and controller-capability configurations. | Static / dynamic control | CPU+GPU | Accuracy, predictability / schedulability | Model / control configuration | Optimization | - |
-| [EFFECT-DNN: Energy-Efficient Edge Framework for Real-Time DNN Inference](https://ieeexplore.ieee.org/abstract/document/10195765) | Zhang et al., WoWMoM 2023 | Tracks QoS and energy targets through nested adaptation loops. | Dynamic | CPU+GPU | Latency, energy / QoS target | Model / configuration | Optimization with feedback | - |
-| [EdgeAdaptor: Online Configuration Adaptation, Model Selection, and Resource Provisioning for Edge DNN Inference Serving at Scale](https://ieeexplore.ieee.org/abstract/document/9817634) | Zhao et al., IEEE TMC 2022 | Jointly adapts inference configurations, model selection, and resource provisioning online. | Dynamic | Heterogeneous edge | Accuracy / latency SLO | Model / request | Online optimization | - |
-| [Robust DNN Partitioning and Resource Allocation under Uncertain Inference Time](https://ieeexplore.ieee.org/abstract/document/11197924) | Nan et al., IEEE TMC 2026 | Formulates chance-constrained partitioning and resource allocation under uncertain inference time. | Static / uncertain | CPU+GPU | Energy / deadline probability | Layer / partition | Robust optimization | - |
-| [Elastic Execution of Multi-Tenant DNNs on Heterogeneous Edge MPSoCs](https://ieeexplore.ieee.org/abstract/document/10817905) | Heidari et al., SEC 2024 | Scales DNN inputs and uses greedy–ILP scheduling to satisfy deadlines under scene variation. | Pipeline / multi-tenant | CPU+GPU+NPU | Latency, accuracy / deadlines | Model / input configuration | Hybrid optimization | - |
+| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload (W) | Hardware (H) | Constraints (C) | Orchestration Action (O) | Objectives (G) | Granularity (Γ) | Decision Policy (Π) | Artifact |
+|---|---|---|---|---|---|---|---|---|---|:---:|
+| [RT-mDL: Supporting Real-Time Mixed Deep Learning Tasks on Edge Platforms](https://dl.acm.org/doi/abs/10.1145/3485730.3485938) | Ling et al., SenSys 2021 | Jointly optimizes model scaling and task scheduling under storage and deadline constraints. | Static mixed tasks | CPU+GPU | deadlines, storage | Model scaling and priority assignment | Latency, accuracy | Model | Optimization | - |
+| [SPET: Transparent SRAM Allocation and Model Partitioning for Real-Time DNN Tasks on Edge TPU](https://ieeexplore.ieee.org/abstract/document/10247661) | Han et al., DAC 2023 | Jointly optimizes SRAM allocation and model partitioning on Edge TPU. | Static | TPU / NPU | SRAM capacity | SRAM allocation and model partitioning | Latency, predictability | Layer / memory region | Optimization | - |
+| [RT-MDM: Real-Time Scheduling Framework for Multi-DNN on MCU Using External Memory](https://dl.acm.org/doi/abs/10.1145/3649329.3655681) | Kang et al., DAC 2024 | Optimizes model segmentation and segment-group mapping to reduce external-memory accesses. | Static multi-DNN | MCU | memory capacity | Segmentation and external-memory scheduling | Latency, predictability | Segment / layer | Optimization | - |
+| [DNN Inference Acceleration Based on Adaptive Task Partitioning and Offloading in Embedded VEC](https://dl.acm.org/doi/full/10.1145/3725734) | Li et al., ACM TECS 2025 | Optimizes task partitioning and offloading under dynamic network and resource conditions. | Dynamic | Device+edge | - | Adaptive task partitioning and offloading | Latency, energy | Layer / subgraph | Optimization | - |
+| [SCENIC: Capability and Scheduling Co-Design for Intelligent Controllers on Heterogeneous Platforms](https://ieeexplore.ieee.org/abstract/document/10844810) | Chen et al., RTSS 2024 | Jointly optimizes resource allocation and controller-capability configurations. | Static / dynamic control | CPU+GPU | schedulability | Capability and scheduling co-design | Accuracy, predictability | Model / control configuration | Optimization | - |
+| [EFFECT-DNN: Energy-Efficient Edge Framework for Real-Time DNN Inference](https://ieeexplore.ieee.org/abstract/document/10195765) | Zhang et al., WoWMoM 2023 | Tracks QoS and energy targets through nested adaptation loops. | Dynamic | CPU+GPU | QoS target | Energy-aware edge scheduling | Latency, energy | Model / configuration | Optimization with feedback | - |
+| [EdgeAdaptor: Online Configuration Adaptation, Model Selection, and Resource Provisioning for Edge DNN Inference Serving at Scale](https://ieeexplore.ieee.org/abstract/document/9817634) | Zhao et al., IEEE TMC 2022 | Jointly adapts inference configurations, model selection, and resource provisioning online. | Dynamic | Heterogeneous edge | latency SLO | Online configuration adaptation and resource provisioning | Accuracy | Model / request | Online optimization | - |
+| [Robust DNN Partitioning and Resource Allocation under Uncertain Inference Time](https://ieeexplore.ieee.org/abstract/document/11197924) | Nan et al., IEEE TMC 2026 | Formulates chance-constrained partitioning and resource allocation under uncertain inference time. | Static / uncertain | CPU+GPU | deadline probability | Robust partitioning and resource allocation | Energy | Layer / partition | Robust optimization | - |
+| [Elastic Execution of Multi-Tenant DNNs on Heterogeneous Edge MPSoCs](https://ieeexplore.ieee.org/abstract/document/10817905) | Heidari et al., SEC 2024 | Scales DNN inputs and uses greedy–ILP scheduling to satisfy deadlines under scene variation. | Pipeline / multi-tenant | CPU+GPU+NPU | deadlines | Elastic multi-tenant execution | Latency, accuracy | Model / input configuration | Hybrid optimization | - |
 
 </details>
 
-### 4.3 Control-Theoretic Scheduling
+### 4.3 Control-Theoretic Scheduling and Runtime Adaptation
 
 Control-theoretic methods close the loop between measured runtime state and resource decisions. Their strength is continuous correction under disturbances; their limitation is that stability and responsiveness depend on an adequate system model and sensing interval.
 
 <details>
 <summary><b>Representative systems</b></summary>
 
-| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload | Hardware | Objectives / Constraints | Granularity | Decision Policy | Artifact |
-|---|---|---|---|---|---|---|---|:---:|
-| [Towards QoS-Based Embedded Machine Learning](https://www.mdpi.com/2079-9292/11/19/3204) | Springer et al., Electronics 2022 | Adjusts compute resources in response to measured deviations from QoS targets. | Static / dynamic | CPU+GPU | Latency, energy / QoS target | Model / control interval | Feedback control | - |
-| [Future-Aware Dynamic Thermal Management in CPU-GPU Embedded Platforms](https://ieeexplore.ieee.org/abstract/document/9984747) | Maity et al., RTSS 2022 | Predicts temperature evolution and proactively adjusts CPU–GPU operation. | Static | CPU+GPU | Latency, energy / thermal limit | System / control interval | Predictive control | - |
-| [FC-GPU: Feedback-Control GPU Scheduling for Real-Time Embedded Systems](https://dl.acm.org/doi/full/10.1145/3761812) | Subramaniyan et al., ACM TECS 2025 | Measures scheduling error and dynamically adjusts GPU allocation using feedback control. | Static | GPU | Latency / deadlines | Kernel / GPU share | Feedback control | - |
-| [Budget RNNs: Multi-Capacity Neural Networks to Improve In-Sensor Inference under Energy Budgets](https://ieeexplore.ieee.org/abstract/document/9470487) | Kannan et al., RTAS 2021 | Selects among model capacities according to the available energy budget. | Dynamic | MCU / CPU | Accuracy / energy budget | Model configuration | Budget-aware control | [Code](https://github.com/tejaskannan/budget-rnn) |
-| [AccuMO: Accuracy-Centric Multitask Offloading in Edge-Assisted Mobile Augmented Reality](https://dl.acm.org/doi/abs/10.1145/3570361.3592531) | Kong et al., MobiCom 2023 | Controls multitask offloading using modeled relationships among resources, latency, and accuracy. | Dynamic | Mobile+edge GPU | Accuracy / latency | Task / model | Model-based control | [Code](https://github.com/JonnyKong/AccuMO) |
+| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload (W) | Hardware (H) | Constraints (C) | Orchestration Action (O) | Objectives (G) | Granularity (Γ) | Decision Policy (Π) | Artifact |
+|---|---|---|---|---|---|---|---|---|---|:---:|
+| [Towards QoS-Based Embedded Machine Learning](https://www.mdpi.com/2079-9292/11/19/3204) | Springer et al., Electronics 2022 | Adjusts compute resources in response to measured deviations from QoS targets. | Static / dynamic | CPU+GPU | QoS target | QoS and DVFS feedback control | Latency, energy | Model / control interval | Feedback control | - |
+| [Future-Aware Dynamic Thermal Management in CPU-GPU Embedded Platforms](https://ieeexplore.ieee.org/abstract/document/9984747) | Maity et al., RTSS 2022 | Predicts temperature evolution and proactively adjusts CPU–GPU operation. | Static | CPU+GPU | thermal limit | Prediction-based CPU/GPU thermal mapping | Latency, energy | System / control interval | Predictive control | - |
+| [FC-GPU: Feedback-Control GPU Scheduling for Real-Time Embedded Systems](https://dl.acm.org/doi/full/10.1145/3761812) | Subramaniyan et al., ACM TECS 2025 | Measures scheduling error and dynamically adjusts GPU allocation using feedback control. | Static | GPU | deadlines | Feedback-controlled GPU scheduling | Latency | Kernel / GPU share | Feedback control | - |
+| [Budget RNNs: Multi-Capacity Neural Networks to Improve In-Sensor Inference under Energy Budgets](https://ieeexplore.ieee.org/abstract/document/9470487) | Kannan et al., RTAS 2021 | Selects among model capacities according to the available energy budget. | Dynamic | MCU / CPU | energy budget | Budget-driven model-capacity control | Accuracy | Model configuration | Budget-aware control | [Code](https://github.com/tejaskannan/budget-rnn) |
+| [AccuMO: Accuracy-Centric Multitask Offloading in Edge-Assisted Mobile Augmented Reality](https://dl.acm.org/doi/abs/10.1145/3570361.3592531) | Kong et al., MobiCom 2023 | Controls multitask offloading using modeled relationships among resources, latency, and accuracy. | Dynamic | Mobile+edge GPU | latency | Accuracy-centric offloading control | Accuracy | Task / model | Model-based control | [Code](https://github.com/JonnyKong/AccuMO) |
 
 </details>
 
-### 4.4 Profile-Guided and Learning-Driven Scheduling
+### 4.4 Profile-Guided Decision Support and Learning-Driven Scheduling
 
 Profile-guided systems rely on measured latency, energy, or interference models; learning-driven systems infer configurations or scheduling policies from data. Their key distinction is whether learning only predicts system behavior or directly produces the runtime decision.
 
 <details>
 <summary><b>Representative systems</b></summary>
 
-| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload | Hardware | Objectives / Constraints | Granularity | Decision Policy | Artifact |
-|---|---|---|---|---|---|---|---|:---:|
-| [nn-Meter: Towards Accurate Latency Prediction of Deep-Learning Model Inference on Diverse Edge Devices](https://dl.acm.org/doi/abs/10.1145/3458864.3467882) | Zhang et al., MobiSys 2021 | Learns operator-level latency predictors from profiling data across diverse edge devices. | Static | CPU+GPU+NPU | Latency prediction | Operator | Supervised learning (predictor) | [Code](https://github.com/microsoft/nn-Meter) |
-| [Mediator: Characterizing and Optimizing Multi-DNN Inference for Energy-Efficient Edge Intelligence](https://ieeexplore.ieee.org/abstract/document/10763713) | Choi et al., IISWC 2024 | Characterizes inter-model interference and uses the resulting performance knowledge to guide energy-efficient execution. | Pipeline / multi-DNN | CPU+GPU+NPU | Latency, accuracy, energy / deadlines | Model | Profile-guided optimization | - |
-| [A Performance-Prediction-Based DNN Partitioner for Edge TPU Pipelining](https://ieeexplore.ieee.org/abstract/document/10773756) | Zou et al., MILCOM 2024 | Predicts partition performance and selects TPU pipeline configurations before deployment. | Static / pipeline | TPU / NPU | Latency, throughput / memory | Layer / partition | Learning-assisted heuristic | - |
-| [Flex: Fast, Accurate DNN Inference on Low-Cost Edges Using Heterogeneous Accelerator Execution](https://dl.acm.org/doi/abs/10.1145/3689031.3696067) | Sen et al., EuroSys 2025 | Uses performance knowledge to choose execution paths across heterogeneous accelerators. | Static | CPU+GPU | Latency, accuracy / deadlines | Layer / path | Profile-guided policy | - |
-| [AdaDrone: Quality-of-Navigation-Based Neural Adaptive Scheduling for Edge-Assisted Drones](https://ieeexplore.ieee.org/abstract/document/9912195) | Chen et al., ICDCS 2022 | Adapts edge-assisted inference according to navigation-quality objectives. | Dynamic | Device+edge | Latency, accuracy / deadlines | Model / task | Learning-based | - |
-| [TapFinger: Task Placement and Fine-Grained Resource Allocation for Edge Machine Learning](https://ieeexplore.ieee.org/abstract/document/10229031) | Li et al., INFOCOM 2023 | Learns task placement and fine-grained resource allocation across distributed edge resources. | Dynamic | Distributed edge | Throughput | Task | Learning-based | [Code](https://github.com/nooblyh/TapFinger) |
-| [BCEdge: SLO-Aware DNN Inference Services with Adaptive Batch-Concurrent Scheduling on Edge Devices](https://ieeexplore.ieee.org/abstract/document/10549973) | Zhang et al., IEEE TNSM 2024 | Adapts batching and concurrent execution from runtime observations to satisfy SLOs. | Dynamic | CPU+GPU+NPU | Latency, throughput / SLO | Batch / request | Learning-assisted scheduling | - |
-| [Reinforcement Learning-Based Edge-Assisted Inference with Multimodal Data](https://ieeexplore.ieee.org/abstract/document/11223761) | Liu et al., IEEE TMC 2025 | Uses reinforcement learning to coordinate multimodal inference across heterogeneous edge resources. | Dynamic / pipeline | CPU+GPU+NPU | Latency, energy, accuracy | Task / modality | Reinforcement learning | [Code](https://github.com/Yucj7/MMCI) |
-| [Adaptive Scheduling of Online Inference Pipelines at the Edge: A Post-Hoc Request-Oriented Approach](https://www.sciencedirect.com/science/article/abs/pii/S1383762125002693) | Sun et al., JSA 2025 | Selects models and batches for queued pipeline requests using graph paths and multi-armed-bandit profiling. | Pipeline | GPU+NPU | Accuracy / latency | Request / model / batch | Online learning | - |
-| [Uncertainty-Aware RL-Based Scheduling of Multi-DNN Workloads on Edge MPSoCs](https://dl.acm.org/doi/abs/10.1145/3769102.3770621) | Heidari et al., SEC 2025 | Learns GNN-based scheduling policies under workload and runtime uncertainty. | Pipeline / multi-DNN | CPU+GPU+NPU | Latency / uncertainty | Model / task | Reinforcement learning | - |
+| Title | Author / Venue / Year | Core Mechanism / Contribution | Workload (W) | Hardware (H) | Constraints (C) | Orchestration Action (O) | Objectives (G) | Granularity (Γ) | Decision Policy (Π) | Artifact |
+|---|---|---|---|---|---|---|---|---|---|:---:|
+| [nn-Meter: Towards Accurate Latency Prediction of Deep-Learning Model Inference on Diverse Edge Devices](https://dl.acm.org/doi/abs/10.1145/3458864.3467882) | Zhang et al., MobiSys 2021 | Learns operator-level latency predictors from profiling data across diverse edge devices. | Static | CPU+GPU+NPU | - | Latency-prediction support for scheduling | Latency prediction | Operator | Supervised learning (predictor) | [Code](https://github.com/microsoft/nn-Meter) |
+| [Mediator: Characterizing and Optimizing Multi-DNN Inference for Energy-Efficient Edge Intelligence](https://ieeexplore.ieee.org/abstract/document/10763713) | Choi et al., IISWC 2024 | Characterizes inter-model interference and uses the resulting performance knowledge to guide energy-efficient execution. | Pipeline / multi-DNN | CPU+GPU+NPU | deadlines | Profile-guided multi-DNN optimization | Latency, accuracy, energy | Model | Profile-guided optimization | - |
+| [A Performance-Prediction-Based DNN Partitioner for Edge TPU Pipelining](https://ieeexplore.ieee.org/abstract/document/10773756) | Zou et al., MILCOM 2024 | Predicts partition performance and selects TPU pipeline configurations before deployment. | Static / pipeline | TPU / NPU | memory | Prediction-based Edge TPU partitioning | Latency, throughput | Layer / partition | Learning-assisted heuristic | - |
+| [Flex: Fast, Accurate DNN Inference on Low-Cost Edges Using Heterogeneous Accelerator Execution](https://dl.acm.org/doi/abs/10.1145/3689031.3696067) | Sen et al., EuroSys 2025 | Uses performance knowledge to choose execution paths across heterogeneous accelerators. | Static | CPU+GPU | deadlines | Heterogeneous accelerator execution selection | Latency, accuracy | Layer / path | Profile-guided policy | - |
+| [AdaDrone: Quality-of-Navigation-Based Neural Adaptive Scheduling for Edge-Assisted Drones](https://ieeexplore.ieee.org/abstract/document/9912195) | Chen et al., ICDCS 2022 | Adapts edge-assisted inference according to navigation-quality objectives. | Dynamic | Device+edge | deadlines | Quality-aware neural scheduling | Latency, accuracy | Model / task | Learning-based | - |
+| [TapFinger: Task Placement and Fine-Grained Resource Allocation for Edge Machine Learning](https://ieeexplore.ieee.org/abstract/document/10229031) | Li et al., INFOCOM 2023 | Learns task placement and fine-grained resource allocation across distributed edge resources. | Dynamic | Distributed edge | - | Task placement and resource allocation | Throughput | Task | Learning-based | [Code](https://github.com/nooblyh/TapFinger) |
+| [BCEdge: SLO-Aware DNN Inference Services with Adaptive Batch-Concurrent Scheduling on Edge Devices](https://ieeexplore.ieee.org/abstract/document/10549973) | Zhang et al., IEEE TNSM 2024 | Adapts batching and concurrent execution from runtime observations to satisfy SLOs. | Dynamic | CPU+GPU+NPU | SLO | Adaptive batch-concurrent scheduling | Latency, throughput | Batch / request | Learning-assisted scheduling | - |
+| [Reinforcement Learning-Based Edge-Assisted Inference with Multimodal Data](https://ieeexplore.ieee.org/abstract/document/11223761) | Liu et al., IEEE TMC 2025 | Uses reinforcement learning to coordinate multimodal inference across heterogeneous edge resources. | Dynamic / pipeline | CPU+GPU+NPU | - | RL-based edge-assisted inference | Latency, energy, accuracy | Task / modality | Reinforcement learning | [Code](https://github.com/Yucj7/MMCI) |
+| [Adaptive Scheduling of Online Inference Pipelines at the Edge: A Post-Hoc Request-Oriented Approach](https://www.sciencedirect.com/science/article/abs/pii/S1383762125002693) | Sun et al., JSA 2025 | Selects models and batches for queued pipeline requests using graph paths and multi-armed-bandit profiling. | Pipeline | GPU+NPU | latency | Post-hoc request-oriented scheduling | Accuracy | Request / model / batch | Online learning | - |
+| [Uncertainty-Aware RL-Based Scheduling of Multi-DNN Workloads on Edge MPSoCs](https://dl.acm.org/doi/abs/10.1145/3769102.3770621) | Heidari et al., SEC 2025 | Learns GNN-based scheduling policies under workload and runtime uncertainty. | Pipeline / multi-DNN | CPU+GPU+NPU | uncertainty | Uncertainty-aware RL scheduling | Latency | Model / task | Reinforcement learning | - |
 
 </details>
 
@@ -390,7 +393,7 @@ Predictable systems restrict execution and communication behavior so that timing
 
 **Insight.** Adaptation is compatible with real-time guarantees only when the adaptation space itself is bounded and analyzable. A promising direction is to certify a finite set of runtime modes and allow online switching only among verified configurations.
 
-### 5.4 Isolation--Sharing Tradeoffs: Temporal Isolation vs. System Efficiency
+### 5.4 Isolation--Sharing Tradeoffs: Isolation Guarantees vs. Resource Efficiency
 
 Isolation reduces interference and simplifies compositional reasoning, but static partitions may leave accelerators and memory underutilized. Sharing improves utilization but requires interference-aware scheduling, resource accounting, and enforcement.
 
@@ -440,7 +443,7 @@ Embedded AI runtimes often cannot optimize latency, energy, and accuracy indepen
 
 The papers below are not presented as completed solutions to the corresponding future direction. They provide partial mechanisms or adjacent foundations from which broader embedded-AI runtime capabilities may emerge.
 
-### 6.1 LLM-Aware Runtime Orchestration
+### 6.1 LLM-Aware Runtime Systems
 
 On-device LLM systems have begun to optimize model architecture, speculative decoding, heterogeneous execution, pruning, and DVFS. Real-time orchestration remains less developed when multiple generative and conventional perception models share accelerators, memory, and energy budgets. Future systems must jointly manage prefill–decode asymmetry, token-level execution variability, KV-cache growth, and interference with periodic workloads.
 
@@ -451,7 +454,7 @@ On-device LLM systems have begun to optimize model architecture, speculative dec
 | [CLONE: Customizing LLMs for Efficient Latency-Aware Inference at the Edge](https://www.usenix.org/conference/atc25/presentation/tian) | Tian et al., USENIX ATC 2025 | Co-optimizes pruning, LoRA routing, and learning-based DVFS. | [Code](https://github.com/qxpBlog/CLONE) |
 | [Hybrid SLM and LLM for Edge–Cloud Collaborative Inference](https://dl.acm.org/doi/abs/10.1145/3662006.3662067) | Hao et al., MobiSys 2024 | Uses an SLM at the edge and selective LLM verification in the cloud at token granularity. | - |
 
-### 6.2 Dynamic Memory Orchestration for Generative and Multi-Model Workloads
+### 6.2 Memory-Centric Resource Management
 
 Future memory managers must coordinate model weights, activations, persistent context, and KV caches across accelerator memory, DRAM, flash, and remote storage. The open problem is to decide when to retain, evict, transfer, compress, or recompute data while preserving token latency and deadline behavior.
 
@@ -474,7 +477,7 @@ AI-native runtimes use learned models not only to predict execution cost but als
 | [Automated Runtime-Aware Scheduling for Multi-Tenant DNN Inference on GPU](https://ieeexplore.ieee.org/abstract/document/9643501) | Yu et al., ICCAD 2021 | Automates cross-level operator scheduling for multi-tenant GPU inference. | - |
 | [EdgeTimer: Adaptive Multi-Timescale Scheduling in Mobile Edge Computing with Deep Reinforcement Learning](https://ieeexplore.ieee.org/abstract/document/10621305) | Hao et al., INFOCOM 2024 | Learns scheduling decisions at multiple timescales using hierarchical safe multi-agent DRL. | - |
 
-### 6.4 Assured and Analyzable Scheduling
+### 6.4 Timing-Assured and Explainable Orchestration
 
 Future embedded-AI runtimes need stronger links among resource orchestration, timing verification, control safety, and runtime assurance. The goal is not to classify all adjacent CPS work as AI scheduling, but to identify methods that could support certified operating modes, verified switching, deterministic accelerators, and explainable constraint violations.
 
@@ -514,7 +517,7 @@ When adding a paper, please provide:
 1. the official paper title and publication link;
 2. authors, venue, and year;
 3. a one-sentence description of the core runtime mechanism;
-4. workload, hardware, objective, constraint, granularity, and policy labels; and
+4. workload, hardware, constraint, orchestration-action, objective, granularity, and policy labels; and
 5. an artifact link when publicly available.
 
 ## Maintenance Notes
@@ -525,7 +528,7 @@ When adding a paper, please provide:
 - Mark learning as a supporting technique when it only predicts performance and does not directly produce the scheduling decision.
 - Keep summaries factual and limited to the contribution demonstrated by the cited paper.
 
-Last updated: **June 2026**.
+Last updated: **Jul 2026**.
 
 ## License
 
