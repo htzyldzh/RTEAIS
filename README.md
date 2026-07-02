@@ -23,7 +23,7 @@ $$
 $$
 
 
-where \(W\) denotes workload characteristics, \(H\) hardware and resource characteristics, \(C\) runtime constraints, \(O\) orchestration actions, \(G\) optimization objectives, \(\Gamma\) orchestration granularity, and \(\Pi\) decision-making policies.
+where \(W\) denotes workload characteristics, \(H\) hardware and resource characteristics, \(C\) runtime constraints, \(O\) orchestration actions, \(G\) optimization objectives, $\Gamma$ orchestration granularity, and $\Pi$ decision-making policies.
 
 The repository serves three purposes:
 
@@ -99,7 +99,7 @@ $$
 S=(W,H,C,O,G,\Gamma,\Pi),
 $$
 
-where \(W\) denotes workload characteristics, \(H\) hardware and resource characteristics, \(C\) runtime constraints, \(O\) orchestration actions, \(G\) optimization objectives, \(\Gamma\) orchestration granularity, and \(\Pi\) decision-making policies.
+where \(W\) denotes workload characteristics, \(H\) hardware and resource characteristics, \(C\) runtime constraints, \(O\) orchestration actions, \(G\) optimization objectives, $\Gamma$ orchestration granularity, and $\Pi$ decision-making policies.
 
 The first three dimensions describe the operating context: what is executed, which resources are available, and which requirements define feasible behavior. The remaining four dimensions describe how the runtime responds: which actions it can take, which outcomes it prefers, at what boundary it intervenes, and how it selects an action.
 
