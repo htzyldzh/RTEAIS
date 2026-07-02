@@ -1,8 +1,5 @@
 <div align="center">
-
-# Real-Time Embedded AI Systems
-
-## Scheduling and Resource Orchestration for Multi-DNN Edge Intelligence
+# Scheduling and Resource Orchestration for Multi-DNN Edge Intelligence: A Survey of Real-Time Embedded AI Systems
 
 </div>
 
@@ -13,7 +10,7 @@
 
 ## Overview
 
-This repository accompanies the survey paper **“Real-Time Embedded AI Systems: Scheduling and Resource Orchestration for Multi-DNN Edge Intelligence.”** It maintains a structured and continuously updated collection of research on runtime scheduling and resource orchestration for embedded AI systems.
+This repository accompanies the survey paper **“Scheduling and Resource Orchestration for Multi-DNN Edge Intelligence: A Survey of Real-Time Embedded AI Systems.”** It maintains a structured and continuously updated collection of research on runtime scheduling and resource orchestration for embedded AI systems.
 
 The survey focuses on systems that execute one or more AI workloads under timing and resource constraints on heterogeneous embedded platforms. Rather than organizing prior work only by application or hardware type, we analyze each system along the paper's seven-dimensional taxonomy:
 
@@ -512,7 +509,7 @@ The paper is currently under preparation. The citation will be updated after a p
 ```bibtex
 @article{huang2026realtimeembeddedai,
   author  = {Huang, Jing and Deng, Zihao and Gu, Zonghua},
-  title   = {Real-Time Embedded AI Systems: Scheduling and Resource Orchestration for Multi-DNN Edge Intelligence},
+  title   = {Scheduling and Resource Orchestration for Multi-DNN Edge Intelligence: A Survey of Real-Time Embedded AI Systems},
   journal = {Manuscript under preparation},
   year    = {2026}
 }
